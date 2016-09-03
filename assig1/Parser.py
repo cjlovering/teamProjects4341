@@ -23,8 +23,15 @@ def main(argv):
          inputfile = arg
       elif opt in ("-o", "--ofile"):
          outputfile = arg
-   print 'Input file is', inputfile
-   print 'Output file is', outputfile
+
+   testfile = open(inputfile, "r")
+   alg = testfile.readline()
+   startnum = testfile.readline()
+   endnum = testfile.readline()
+   time = testfile.readline()
+   ops = testfile.read()
+   print alg, startnum, endnum, time, ops
+   testfile.close()
 
 if __name__ == "__main__":
    main(sys.argv[1:])
