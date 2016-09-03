@@ -1,6 +1,6 @@
 # teamProjects4341
 
-## members:
+## members
 * Jonas
 * August
 * Charlie
