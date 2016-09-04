@@ -13,4 +13,6 @@ test:
 - [ ] implement general structure of problem
 - [x] implement a parser
 - [ ] design and implement a heuristic functions
-- [ ] implement both greedy and iterative deepening
+- [x] implement greedy
+- [ ] implement cutoff for greedy
+- [ ] implement iterative deepening

@@ -1,5 +1,4 @@
 #!/usr/bin/python
-
 import sys, getopt
 from problem import Problem
 
@@ -10,11 +9,11 @@ def parse(argv):
    try:
      opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
    except getopt.GetoptError:
-     print('test.py -i <inputfile> -o <outputfile>')
+     print('test.py -i <inputfile>')
      sys.exit(2)
    for opt, arg in opts:
      if opt == '-h':
-       print('test.py -i <inputfile> -o <outputfile>')
+       print('test.py -i <inputfile>')
        sys.exit()
      elif opt in ("-i", "--ifile"):
        inputfile = arg
@@ -26,7 +25,7 @@ def parse(argv):
    startnum = num(testfile.readline().strip(' \t\n\r'))
    endnum = num(testfile.readline().strip(' \t\n\r'))
    time = num(testfile.readline().strip(' \t\n\r'))
-   tempOps = testfile.read().split()
+   tempOps = testfile.read().lstrip().rstrip().split()
    ops = []
    for index in range(0, len(tempOps), 2):
      ops.append((tempOps[index], num(tempOps[index+1])))
