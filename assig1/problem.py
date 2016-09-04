@@ -31,7 +31,7 @@ class Problem:
   # evaluates the operation on a given number
   # @param number - the number to be evaluated
   # @param op - the operation to be executed
-  def evalOperation(self, number, op):
+  def evalOp(self, number, op):
     return buildOperation(number, op[0], op[1])
 
   # determines if this branch should be cutoff

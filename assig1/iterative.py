@@ -1,6 +1,7 @@
 from problem import Problem
 import time
 import math
+from utility import goal_test
 
 node_count = 0
 
@@ -30,7 +31,6 @@ def solve(problem):
 def closer(old, new, target):
   return True
 
-# TODO: implement
 # @param problem - the problem to solve
 # @param limit - the depth limit
 # @return the current val (the best so far?)
@@ -46,19 +46,13 @@ def recursive_dls(current, problem, limit):
     return current
   else:
     for op in problem.ops:
-      child = problem.evalOperation(current, op)
+      child = problem.evalOp(current, op)
       result = recursive_dls(child, problem, limit - 1)
       if cut_off(result, problem.targetnum, problem):
         break
     return result
   # we can add a cutoff here, as in we're looking for 5, and only getting bigger 4 *2 *2 *2
   
-  
-
-# @return - if we reached the goal
-def goal_test(result, target):
-  return (float(result)) == (float(target))
-
 # @return - if we reached the goal or hit a cut-off
 def cut_off(result, target, problem):
   if goal_test(result, target):

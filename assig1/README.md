@@ -10,9 +10,15 @@ test:
   python3 main.py -i tests/<testfile>
 ```
 ### tasks:
-- [ ] implement general structure of problem
+- [x] implement general structure of problem
 - [x] implement a parser
-- [ ] design and implement a heuristic functions
+- [x] design and implement a heuristic function
 - [x] implement greedy
-- [ ] implement cutoff for greedy
-- [ ] implement iterative deepening
+- [x] implement cutoff for greedy
+- [x] implement iterative deepening
+- [ ] design and implement advanced heuristic function
+- [ ] complicated tests
+- [ ] unittests for functions
+- [ ] complete greedy search
+- [ ] enable optional path
+- [ ] build basic gui
