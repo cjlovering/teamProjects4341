@@ -48,7 +48,7 @@ def recursive_dls(current, problem, limit):
     for op in problem.ops:
       child = problem.evalOperation(current, op)
       result = recursive_dls(child, problem, limit - 1)
-      if cut_off(result, problem.targetnum):
+      if cut_off(result, problem.targetnum, problem):
         break
     return result
   # we can add a cutoff here, as in we're looking for 5, and only getting bigger 4 *2 *2 *2
@@ -60,7 +60,9 @@ def goal_test(result, target):
   return (float(result)) == (float(target))
 
 # @return - if we reached the goal or hit a cut-off
-def cut_off(result, target):
+def cut_off(result, target, problem):
   if goal_test(result, target):
+    return True
+  if problem.cut_off(result):
     return True
   return False
