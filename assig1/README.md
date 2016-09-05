@@ -17,8 +17,9 @@ test:
 - [x] implement cutoff for greedy
 - [x] implement iterative deepening
 - [ ] design and implement advanced heuristic function
-- [ ] complicated tests
+- [ ] complicated and complete testing
 - [ ] unittests for functions
 - [ ] complete greedy search
-- [ ] enable optional path
-- [ ] build basic gui
+- [ ] complete iterative d. closer
+- [ ] enable optional path, where it saves and prints out the correct path (extra)
+- [ ] build basic gui (extra)
