@@ -19,7 +19,7 @@ def solve(problem):
   frontierSet.add(current)
   start_time = time.time()
   
-  while True:
+  while (time.time() - start_time < problem.time): #while we have time
     if frontier.empty():
       return (1,-1,-1,-1,-1) #failure
     current = frontier.get()
