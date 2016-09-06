@@ -23,3 +23,6 @@ test:
 - [ ] complete iterative d. closer
 - [ ] enable optional path, where it saves and prints out the correct path (extra)
 - [ ] build basic gui (extra)
+
+### References:
+http://www.tutorialspoint.com/python/python_command_line_arguments.htm
