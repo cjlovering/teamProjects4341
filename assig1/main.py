@@ -25,6 +25,7 @@ def main(argv):
   nodes = result[3]
   max = result[4]
 
+  print("Algorithm used: " + problem.alg)
   print("Errors: %r" % errors)
   print("Value found: %r" % val)
   print("Steps taken: %r" % steps)
