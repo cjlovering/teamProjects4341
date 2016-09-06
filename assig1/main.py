@@ -18,12 +18,12 @@ def main(argv):
   else:
     result = iterative.solve(problem)
     
-  errors = 0
   val = result[0]
   steps = result[1]
   time = result[2]
   nodes = result[3]
   max = result[4]
+  errors = abs(val - problem.targetnum)
 
   print("Algorithm used: " + problem.alg)
   print("Errors: %r" % errors)
