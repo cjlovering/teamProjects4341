@@ -34,7 +34,8 @@ def solve(problem):
         depth = current[2] + 1
         if depth > maxDepth:
           maxDepth = depth
-        child_node = (heuristic(child, problem.targetnum) + current[0], child, depth) # consider f = f + h vs f = h
+          child_node = (heuristic(child, problem.targetnum), child, depth)
+#        child_node = (heuristic(child, problem.targetnum) + current[0], child, depth) # consider f = f + h vs f = h
         frontier.put(child_node)
         frontierSet.add(child_node)
       #TODO: this?
@@ -43,4 +44,4 @@ def solve(problem):
         
        # print("todo")
 
-  return (current[1], current[2], time.time()-start_time,nodes,maxDepth)
+  return (current[1], current[2], time.time()-start_time, nodes, maxDepth)

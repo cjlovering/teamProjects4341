@@ -15,7 +15,7 @@ def solve(problem):
   result = best
   node_count = 0
 
-  while(time.time() - start_time < problem.time): #while we have time!
+  while(time.time() - start_time + 0.00001 * depth < problem.time): #while we have time + fudge factor TODO: (experiment)
     result = depth_limited_search(problem, depth)
     if goal_test(result, problem.targetnum): 
       best = result

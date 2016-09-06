@@ -92,6 +92,8 @@ def categorizeOperation(stringOperator, operand):
 
   print("did not find operator: %r" % stringOperator)
 
+# executes the calculation
+# @return - the value of the operator applied to the init value and the operand
 def buildOperation(init, stringOperator, operand):
   if stringOperator == '+':
     return init + operand
