@@ -1,47 +1,61 @@
 from problem import Problem
+from node import Node
 import queue
 import time
 
 from utility import goal_test
 from heuristics import heuristic
 
-
-
 # greedy algorithm
 def solve(problem):
-  nodes = 0
+  nodeCount = 0
   maxDepth = 0
-  current = (heuristic(problem.startnum, problem.targetnum), problem.startnum, 0) # h cost, data, depth
-  frontier = queue.PriorityQueue()  #sorted on sorted(list(entries))[0] TODO: create a data struct with sorting and O(1) lookup
+  current = Node(heuristic(problem.startnum, problem.targetnum), problem.startnum, 0, None, None) 
+  # h cost, data, depth, last node, val, operation
+  frontier = queue.PriorityQueue() #sorted on cost of operation
   frontier.put(current)
   explored = set()  #set
   frontierSet = set()
   frontierSet.add(current)
   start_time = time.time()
+  best = current
   
-  while (time.time() - start_time < problem.time): #while we have time
+  while (time.time() - start_time  < problem.time - 0.0001): #while we have time
     if frontier.empty():
-      return (1,-1,-1,-1,-1) #failure
+      break
     current = frontier.get()
-    if goal_test(current[1], problem.targetnum):
+    if goal_test(current.data, problem.targetnum):
       break #success
     explored.add(current)
     
+    depth = current.depth + 1
+    if depth > maxDepth:
+      maxDepth = depth
+
     for op in problem.ops:
-      child = problem.evalOp(current[1], op)
+      child = problem.evalOp(current.data, op)
       if child not in explored or frontierSet:
-        nodes += 1
-        depth = current[2] + 1
-        if depth > maxDepth:
-          maxDepth = depth
-        child_node = (heuristic(child, problem.targetnum), child, depth)
-#       child_node = (heuristic(child, problem.targetnum) + current[0], child, depth) # consider f = f + h vs f = h
+        nodeCount += 1        
+        child_node = Node(heuristic(child, problem.targetnum), child, depth, current, op)
+        if closer(best.data, child, problem.targetnum):
+          best = child_node
+        elif problem.cut_off(child):
+          break
         frontier.put(child_node)
-        frontierSet.add(child_node)
+        frontierSet.add(child) 
       #TODO: this?
       #elif child in frontierSet:
         #if new heuristic is lower then replace frontier node with this one
-        
        # print("todo")
+  
+  if heuristic(best.data, problem.targetnum) <= heuristic(current.data, problem.targetnum):
+    current = best
+    print("vest")
 
-  return (current[1], current[2], time.time()-start_time, nodes, maxDepth)
+  return (current.data, current.depth, time.time()-start_time, nodeCount, maxDepth, current)
+
+
+# idea: probably use the same set of heuristics to det answer
+# @return true if the new val is closer than the old val 
+def closer(old, new, target):
+  return heuristic(new, target) < old

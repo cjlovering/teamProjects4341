@@ -34,7 +34,7 @@ class Problem:
     return operations.buildOperation(number, op[0], op[1])
 
   # determines if this branch should be cutoff
-  # @param current - the current value of the state
+  # @param {number} current - the current value of the state
   # @return {boolean}
   def cut_off(self, current):
     if self.increasing == None:
