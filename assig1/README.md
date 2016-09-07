@@ -19,9 +19,10 @@ test:
 - [ ] design and implement advanced heuristic function
 - [ ] complicated and complete testing
 - [ ] unittests for functions
-- [ ] complete greedy search
-- [ ] complete iterative d. closer
-- [ ] enable optional path, where it saves and prints out the correct path (extra)
+- [x] complete greedy search
+- [x] complete iterative d. closer
+- [x] enable optional path, where it saves and prints out the correct path (extra)
+- [ ] cut off for ocsillating values 
 - [ ] build basic gui (extra)
 
 ### References:
