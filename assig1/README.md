@@ -9,19 +9,23 @@ test:
 ```node
   python3 main.py -i tests/<testfile>
 ```
-### tasks:
+### completed tasks:
 - [x] implement general structure of problem
 - [x] implement a parser
 - [x] design and implement a heuristic function
 - [x] implement greedy
 - [x] implement cutoff for greedy
 - [x] implement iterative deepening
-- [ ] design and implement advanced heuristic function
-- [ ] complicated and complete testing
-- [ ] unittests for functions
 - [x] complete greedy search
 - [x] complete iterative d. closer
 - [x] enable optional path, where it saves and prints out the correct path (extra)
+
+### tasks:
+- [ ] design and implement advanced heuristic function
+- [ ] complicated and complete testing
+- [ ] unittests for functions
+- [ ] design scheme for replacing frontier values on improvement
+  - [ ] reimplement priority queue
 - [ ] cut off for ocsillating values 
 - [ ] build basic gui (extra)
 
