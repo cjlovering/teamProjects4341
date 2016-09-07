@@ -21,7 +21,7 @@ class Problem:
     self.targetnum = targetnum
     self.time = time
     self.ops = ops
-    self.increasing = operations.categorizeProblem(self.ops)
+    self.increasing = operations.categorize_problem(self.ops)
 
   # prints the problem details
   def printProblem(self):
@@ -31,7 +31,7 @@ class Problem:
   # @param number - the number to be evaluated
   # @param op - the operation to be executed
   def evalOp(self, number, op):
-    return operations.buildOperation(number, op[0], op[1])
+    return operations.eval_operation(number, op[0], op[1])
 
   # determines if this branch should be cutoff
   # @param {number} current - the current value of the state
