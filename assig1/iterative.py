@@ -16,7 +16,7 @@ def solve(problem):
   start_time = time.time()
   depth = 0
   global best
-  best = Node(heuristic(problem.startnum, problem.targetnum), problem.startnum, 0, None, None)
+  best = Node(heuristic(problem.startnum, problem), problem.startnum, 0, None, None)
   result = best
   node_count = 0
 
@@ -34,7 +34,7 @@ def solve(problem):
 # @param limit - the depth limit
 # @return the current val (the best so far?)
 def depth_limited_search(problem, limit):
-  n = Node(heuristic(problem.startnum, problem.targetnum), problem.startnum, 0, None, None)
+  n = Node(heuristic(problem.startnum, problem), problem.startnum, 0, None, None)
   return recursive_dls(n, problem, limit)
 
 def recursive_dls(current, problem, limit):
@@ -47,7 +47,7 @@ def recursive_dls(current, problem, limit):
   else:
     for op in problem.ops:
       child = problem.evalOp(current.data, op)
-      child_node = Node(heuristic(child, problem.targetnum), child, current.depth + 1, current, op)
+      child_node = Node(heuristic(child, problem), child, current.depth + 1, current, op)
       result = recursive_dls(child_node, problem, limit - 1)
       if cut_off(result, problem.targetnum, problem):
         break
