@@ -83,3 +83,22 @@ def eval_operation(init, stringOperator, operand):
   if stringOperator == '!':
     return math.factorial(init)
   print("did not find operator: %r" % stringOperator)
+
+# precalculates the sub target operations
+# @param target - the number target
+# @param ops - the operations
+# @return - the sub targets
+def calculate_subtargets(target, ops):
+  sub_targets = []
+
+  for op in ops:
+    if op[0] == '+':
+      sub_targets.append(target - op[1])
+    if op[0] == '-':
+      sub_targets.append(target + op[1])
+    if op[0] == '/':
+      sub_targets.append(target * op[1])
+    if op[0] == '*':
+      sub_targets.append(target / op[1])
+
+  return sub_targets

@@ -23,6 +23,7 @@ class Problem:
     self.time = time
     self.ops = ops
     self.increasing = operations.categorize_problem(self.ops)
+    self.sub_targets = operations.calculate_subtargets(self.targetnum, self.ops)
 
   def __str__(self):
     return ""
