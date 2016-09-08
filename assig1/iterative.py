@@ -22,19 +22,19 @@ def solve(problem):
     if cut_off(result.data, problem.targetnum, problem):  #cut search here: inc or found goal
       best = result
       break
-    elif closer(best.cost, result.data, problem.targetnum):  #update best so far
+    elif closer(best.cost, result.data, problem):  #update best so far
       best = result
     result = depth_limited_search(problem, depth)
     depth += 1
   
-  if closer(best.cost, result.data, problem.targetnum):  #update best so far (if last iteration finds answer)
+  if closer(best.cost, result.data, problem):  #update best so far (if last iteration finds answer)
     best = result
   return (best.data, best.depth, time.time()-start_time, node_count, depth, best)
 
 # idea: probably use the same set of heuristics to det answer
 # @return true if the new val is closer than the old val
-def closer(old, new, target):
-  return heuristic(new, target) < old
+def closer(old, new, problem):
+  return heuristic(new, problem) < old
     
 # @param problem - the problem to solve
 # @param limit - the depth limit

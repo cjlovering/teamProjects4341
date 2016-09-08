@@ -37,7 +37,7 @@ def main(argv):
   print("Steps taken: %r" % steps)
   print("Time taken: %r" % time)
   print("Nodes expanded: %r" % nodes)
-  print("Max depth travered: %r" % max)
+  print("Max depth traversed: %r" % max)
 
 if __name__ == "__main__":
    main(sys.argv[1:])
