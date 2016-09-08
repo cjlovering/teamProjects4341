@@ -44,6 +44,7 @@ class Problem:
     if self.increasing == None:
       return False
     if current > self.targetnum:
+      print(current)
       if self.increasing:
         return True
     elif current < self.targetnum:

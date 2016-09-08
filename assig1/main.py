@@ -29,7 +29,7 @@ def main(problem, debug):
 
   if debug == None or debug == True:
     try:
-      endNode.printPath()
+      endNode.print_path()
     except:
       print("No steps taken...")
 

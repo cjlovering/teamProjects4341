@@ -50,6 +50,7 @@ def recursive_dls(current, problem, limit):
       child = problem.evalOp(current.data, op)
       child_node = Node(heuristic(child, problem), child, current.depth + 1, current, op)
       next_node = recursive_dls(child_node, problem, limit - 1)
+
       if cut_off(next_node, problem.targetnum, problem):
         break
   return next_node
@@ -61,8 +62,6 @@ def cut_off(node, target, problem):
   if (time.time() - start_time) > (problem.time - 0.0001):
     return True
   if goal_test(node.data, target):
-    return True
-  elif problem.cut_off(node.data):
     return True
   elif closer(best.data, node.data, target):
     best = node

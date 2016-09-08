@@ -3,7 +3,6 @@ from node import Node
 import queue
 import time
 
-
 from utility import goal_test
 from utility import closer
 from heuristics import heuristic
@@ -25,8 +24,6 @@ def solve(problem):
   while time.time() - start_time  < problem.time - 0.0001: #while we have time
     if frontier.empty():
       break
-    elif current.cut_off():
-      break
     current = frontier.get()
     if goal_test(current.data, problem.targetnum):
       break #success
@@ -43,8 +40,6 @@ def solve(problem):
         child_node = Node(heuristic(child, problem), child, depth, current, op)
         if closer(best.data, child, problem.targetnum):
           best = child_node
-        elif problem.cut_off(child):
-          break
         frontier.put(child_node)
         frontierSet.add(child)
 

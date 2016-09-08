@@ -28,7 +28,7 @@ class Node:
   def __str__(self):
     return  str(self.data) + " " + str(self.op)
 
-  def printPath(self):
+  def print_path(self):
       temp = self
       path = []
 
@@ -51,6 +51,7 @@ class Node:
   # @param {node} self- the current node
   # @return {boolean}
   def cut_off(self):
+    print("SDFSDFSDFSDFSDF")
     parent = self.parent
     if parent is not None:
       grandparent = parent.parent

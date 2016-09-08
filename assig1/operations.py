@@ -89,8 +89,8 @@ def eval_operation(init, stringOperator, operand):
 # @param ops - the operations
 # @return - the sub targets
 def calculate_subtargets(target, ops):
-  sub_targets = []
 
+  sub_targets = []
   for op in ops:
     if op[0] == '+':
       sub_targets.append(target - op[1])
