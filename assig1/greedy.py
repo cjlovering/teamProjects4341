@@ -22,7 +22,7 @@ def solve(problem):
   start_time = time.time()
   best = current
 
-  while (time.time() - start_time  < problem.time - 0.0001): #while we have time
+  while time.time() - start_time  < problem.time - 0.0001: #while we have time
     if frontier.empty():
       break
     elif current.cut_off():
