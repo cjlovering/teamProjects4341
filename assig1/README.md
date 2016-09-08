@@ -19,15 +19,15 @@ test:
 - [x] complete greedy search
 - [x] complete iterative d. closer
 - [x] enable optional path, where it saves and prints out the correct path (extra)
+- [x] design and implement advanced heuristic function
 
 ### tasks:
-- [ ] design and implement advanced heuristic function
 - [ ] complicated and complete testing
 - [ ] unittests for functions
 - [ ] design scheme for replacing frontier values on improvement
   - [ ] reimplement priority queue
 - [ ] cut off for ocsillating values 
-- [ ] build basic gui (extra)
+- [ ] finish up analysis
 
 ### References:
 http://www.tutorialspoint.com/python/python_command_line_arguments.htm

@@ -3,7 +3,7 @@ import sys, getopt
 from problem import Problem
 
 #usage: python Parser.py -i tests/<filename>
-def parse(argv):
+def parseCommandLine(argv):
    inputfile = ''
    outputfile = ''
    try:
@@ -19,7 +19,9 @@ def parse(argv):
        inputfile = arg
      elif opt in ("-o", "--ofile"):
        outputfile = arg
-
+   return inputfile
+   
+def parseFile(inputfile):
    testfile = open(inputfile, "r")
    alg = testfile.readline().strip(' \t\n\r')
    startnum = num(testfile.readline().strip(' \t\n\r'))
