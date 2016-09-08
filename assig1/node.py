@@ -25,6 +25,9 @@ class Node:
   def __hash__(self):
     return hash(tuple((self.cost, self.data, self.depth)))
 
+  def __str__(self):
+    return  str(self.data) + " " + str(self.op)
+
   def printPath(self):
       temp = self
       path = []
@@ -37,11 +40,22 @@ class Node:
 
       for node in range(len(path)):
         num = path[node].data
-        
+
         if node == len(path) - 1 :
           print(num)
         else:
           op = path[node + 1].op
           print(num, op[0], op[1])
 
-            
+  # determines if it is oscillating
+  # @param {node} self- the current node
+  # @return {boolean}
+  def cut_off(self):
+    parent = self.parent
+    if parent is not None:
+      grandparent = parent.parent
+      if grandparent is not None and grandparent.data == self.data:
+        greatgrandparent = grandparent.parent
+        if greatgrandparent is not None and greatgrandparent.data == parent.data:
+          return True
+    return False

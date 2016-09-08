@@ -48,18 +48,18 @@ def recursive_dls(current, problem, limit):
     for op in problem.ops:
       child = problem.evalOp(current.data, op)
       child_node = Node(heuristic(child, problem), child, current.depth + 1, current, op)
-      result = recursive_dls(child_node, problem, limit - 1)
-      if cut_off(result, problem.targetnum, problem):
+      next_node = recursive_dls(child_node, problem, limit - 1)
+      if cut_off(next_node, problem.targetnum, problem):
         break
-  return result
+  return next_node
 
 # @return - if we reached the goal or hit a cut-off
-def cut_off(result, target, problem):
+def cut_off(node, target, problem):
   global best
-  if goal_test(result.data, target):
+  if goal_test(node.data, target):
     return True
-  elif problem.cut_off(result.data):
+  elif problem.cut_off(node.data):
     return True
-  elif closer(best.data, result.data, target):
-    best = result
+  elif closer(best.data, node.data, target):
+    best = node
   return False
