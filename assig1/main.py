@@ -1,6 +1,7 @@
 # imports
 import sys
-from parser import parse
+from parser import parseFile
+from parser import parseCommandLine
 from problem import Problem
 from node import Node
 import greedy
@@ -11,8 +12,7 @@ ITERATIVE = 'iterative'
 GREEDY = 'greedy'
 
 # general system
-def main(argv):
-  problem = parse(argv)
+def main(problem, debug):
   
   if GREEDY == problem.alg:
     result = greedy.solve(problem)
@@ -26,18 +26,25 @@ def main(argv):
   nodes = result[3]
   max = result[4]
   endNode = result[5]
-  try: 
-    endNode.printPath()
-  except:
-    print("No steps taken...")
 
-  print("Algorithm used: " + problem.alg)
-  print("Error: %r" % error)
-  print("Value found: %r" % val)
-  print("Steps taken: %r" % steps)
-  print("Time taken: %r" % time)
-  print("Nodes expanded: %r" % nodes)
-  print("Max depth traversed: %r" % max)
+
+  if debug == None or debug == True:
+    try: 
+      endNode.printPath()
+    except:
+      print("No steps taken...")
+
+    print("Algorithm used: " + problem.alg)
+    print("Error: %r" % error)
+    print("Value found: %r" % val)
+    print("Steps taken: %r" % steps)
+    print("Time taken: %r" % time)
+    print("Nodes expanded: %r" % nodes)
+    print("Max depth traversed: %r" % max)
+  
+  return (problem.alg, error, val, steps, time, nodes, max)
 
 if __name__ == "__main__":
-   main(sys.argv[1:])
+   main( parseFile(parseCommandLine(sys.argv[1:])), True)
+
+
