@@ -16,23 +16,17 @@ def solve(problem):
   depth = 0
   global best 
   best = Node(heuristic(problem.startnum, problem.targetnum), problem.startnum, 0, None, None)
-  print(best.cost)
   result = best
   node_count = 0
 
   while(time.time() - start_time + 0.00001 * depth < problem.time): #while we have time + fudge factor TODO: (experiment)
     if cut_off(result, problem.targetnum, problem):  #cut search here: inc or found goal
-      print("asdfasdf")
       best = result
       break
     elif closer(best.cost, result.data, problem.targetnum):  #update best so far
-      print("asdfasdf asdfff")
       best = result
     result = depth_limited_search(problem, depth)
     depth += 1
-
-  print(result.data)
-  print(best.data)
 
   if closer(best.cost, result.data, problem.targetnum):  #update best so far (if last iteration finds answer)
     best = result
@@ -42,7 +36,6 @@ def solve(problem):
 # idea: probably use the same set of heuristics to det answer
 # @return true if the new val is closer than the old val
 def closer(old, new, target):
-  print(old, new, target)
   return heuristic(new, target) < old
     
 # @param problem - the problem to solve
@@ -56,7 +49,6 @@ def recursive_dls(current, problem, limit):
   global node_count
   node_count += 1
   if goal_test(current.data, problem.targetnum):
-    print("goal")
     return current
   elif limit == 0:
     return current

@@ -50,7 +50,6 @@ def solve(problem):
   
   if heuristic(best.data, problem.targetnum) <= heuristic(current.data, problem.targetnum):
     current = best
-    print("vest")
 
   return (current.data, current.depth, time.time()-start_time, nodeCount, maxDepth, current)
 
