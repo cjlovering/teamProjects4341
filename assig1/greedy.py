@@ -47,10 +47,6 @@ def solve(problem):
           break
         frontier.put(child_node)
         frontierSet.add(child)
-      #TODO: this?
-      #elif child in frontierSet:
-        #if new heuristic is lower then replace frontier node with this one
-       # print("todo")
 
   if heuristic(current.data, problem) < heuristic(best.data, problem):
     best = current
