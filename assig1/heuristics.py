@@ -2,9 +2,6 @@
 import math
 
 
-abs_difference = lambda current, problem : abs(current - problem.targetnum)
-square_difference = lambda current, problem : abs(current ** 2 - problem.targetnum ** 2)
-
 def sub_problems(current, problem):
   subtarget_diff = []
   for op in problem.ops:
@@ -20,13 +17,8 @@ def sub_problems(current, problem):
 #      subtarget_diff.append(abs(current - (math.pow(problem.targetnum, 1 / op[1]))))
   return min(subtarget_diff)
 
-def heuristics():
-  return (abs_difference, square_difference)
+def abs_difference(current, target):
+  return abs(current - target)
 
 def heuristic(current, problem):
   return min([abs_difference(current, problem), sub_problems(current, problem)])
-
-#h = heuristics()
-#for f in h:
- #print(f(7,9))
-

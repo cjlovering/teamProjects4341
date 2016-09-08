@@ -3,7 +3,9 @@ from node import Node
 import queue
 import time
 
+
 from utility import goal_test
+from utility import closer
 from heuristics import heuristic
 
 # greedy algorithm
@@ -19,7 +21,7 @@ def solve(problem):
   frontierSet.add(current)
   start_time = time.time()
   best = current
-  
+
   while (time.time() - start_time  < problem.time - 0.0001): #while we have time
     if frontier.empty():
       break
@@ -27,7 +29,7 @@ def solve(problem):
     if goal_test(current.data, problem.targetnum):
       break #success
     explored.add(current)
-    
+
     depth = current.depth + 1
     if depth > maxDepth:
       maxDepth = depth
@@ -37,12 +39,12 @@ def solve(problem):
       if child not in explored or frontierSet:
         nodeCount += 1        
         child_node = Node(heuristic(child, problem), child, depth, current, op)
-        if closer(best.data, child, problem):
+        if closer(best.data, child, problem.targetnum):
           best = child_node
         elif problem.cut_off(child):
           break
         frontier.put(child_node)
-        frontierSet.add(child) 
+        frontierSet.add(child)
       #TODO: this?
       #elif child in frontierSet:
         #if new heuristic is lower then replace frontier node with this one
@@ -50,12 +52,5 @@ def solve(problem):
   
   if heuristic(best.data, problem) <= heuristic(current.data, problem):
     current = best
-    print("vest")
 
   return (current.data, current.depth, time.time()-start_time, nodeCount, maxDepth, current)
-
-
-# idea: probably use the same set of heuristics to det answer
-# @return true if the new val is closer than the old val 
-def closer(old, new, problem):
-  return heuristic(new, problem) < old

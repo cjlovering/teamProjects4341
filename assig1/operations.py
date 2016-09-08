@@ -1,7 +1,7 @@
 import math
 
 # @return - True if increasing, False if decreasing, None if unchanging or neither
-def categorizeOperation(stringOperator, operand):
+def categorize_operation(stringOperator, operand):
   if stringOperator == '+':
     if operand > 0:
       return True
@@ -18,41 +18,49 @@ def categorizeOperation(stringOperator, operand):
       return True  # can't be decreased
   if stringOperator == '/':
     if operand < 0:
+      return None
+    elif operand > 0 and operand < 1:
       return True
     elif operand > 0:
       return False
     elif operand == 0:
-      return False  # should we generally guard against this
+      return None  # should we generally guard against this
   if stringOperator == '*':
+    if operand > 0 and operand < 1:
+      return False
     if operand > 0:
       return True
+    elif operand < 0 and operand > -1:
+      return None
     elif operand < 0:
       return False
     elif operand == 0:
       return False  # effectively decreasing the val
   if stringOperator == '^':
-    if operand > 0:
-      return True
-    elif operand < 0:
+    if operand > 0 and operand < 1:
       return False
-    elif operand == 0:
+    elif operand > 0:
+      return True
+    elif operand < 0 and operand > -1:
+      return None
+    elif operand == 0 or operand == 1:
       return False   #effectively decreasing the val
   if stringOperator == '!':
-    return True
+    return True #well only if negative, but for now
   print("did not find operator: %r" % stringOperator)
 
 # @return - True if increasing, False if decreasing
-def categorizeProblem(ops):
+def categorize_problem(ops):
   inc = True
   for op in ops:
-    inc = inc and categorizeOperation(op[0], op[1])
+    inc = inc and categorize_operation(op[0], op[1])
     if not inc:
       break; #early escape
   if inc:
     return True
   dec = True
   for op in ops:
-    dec = dec and not categorizeOperation(op[0], op[1])
+    dec = dec and not categorize_operation(op[0], op[1])
     if inc:
       break; #early escape
   if dec:
@@ -61,7 +69,7 @@ def categorizeProblem(ops):
 
 # executes the calculation
 # @return - the value of the operator applied to the init value and the operand
-def buildOperation(init, stringOperator, operand):
+def eval_operation(init, stringOperator, operand):
   if stringOperator == '+':
     return init + operand
   if stringOperator == '-':
