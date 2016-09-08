@@ -20,7 +20,7 @@ def parseCommandLine(argv):
      elif opt in ("-o", "--ofile"):
        outputfile = arg
    return inputfile
-   
+
 def parseFile(inputfile):
    testfile = open(inputfile, "r")
    alg = testfile.readline().strip(' \t\n\r')
@@ -31,7 +31,7 @@ def parseFile(inputfile):
    ops = []
    for index in range(0, len(tempOps), 2):
      ops.append((tempOps[index], num(tempOps[index+1])))
-
+   testfile.close()
    problem = Problem( alg, startnum, endnum, time, ops )
    return problem
 
