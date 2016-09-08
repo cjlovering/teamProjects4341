@@ -24,6 +24,8 @@ class Problem:
     self.ops = ops
     self.increasing = operations.categorize_problem(self.ops)
 
+  def __str__(self):
+    return ""
   # prints the problem details
   def printProblem(self):
     print (self.alg, self.startnum, self.targetnum, self.time, self.ops)

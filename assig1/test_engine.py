@@ -3,6 +3,7 @@ from parser import parseFile
 from os import listdir
 from os.path import isfile, join
 import re
+from problem import Problem
 
 testfiles = [f for f in listdir("./tests") if isfile(join("./tests", f))]
 

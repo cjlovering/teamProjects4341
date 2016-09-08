@@ -13,12 +13,11 @@ GREEDY = 'greedy'
 
 # general system
 def main(problem, debug):
-  
   if GREEDY == problem.alg:
     result = greedy.solve(problem)
   else:
     result = iterative.solve(problem)
-    
+
   val = result[0]
   error = abs(val - problem.targetnum)
   steps = result[1]
@@ -29,7 +28,7 @@ def main(problem, debug):
 
 
   if debug == None or debug == True:
-    try: 
+    try:
       endNode.printPath()
     except:
       print("No steps taken...")
@@ -41,10 +40,8 @@ def main(problem, debug):
     print("Time taken: %r" % time)
     print("Nodes expanded: %r" % nodes)
     print("Max depth traversed: %r" % max)
-  
+
   return (problem.alg, error, val, steps, time, nodes, max)
 
 if __name__ == "__main__":
    main( parseFile(parseCommandLine(sys.argv[1:])), True)
-
-
