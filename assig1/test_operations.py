@@ -3,7 +3,7 @@ from operations import categorize_operation
 from operations import categorize_problem
 from operations import eval_operation
 
-class TestOperator(unittest.TestCase):
+class TestOperation(unittest.TestCase):
   def _test_categorize_operation(self, operator, operand, result):
     self.assertEqual(categorize_operation(operator, operand), result)
   def _test_categorize_problem(self, ops, result):

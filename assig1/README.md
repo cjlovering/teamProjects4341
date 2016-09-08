@@ -7,7 +7,7 @@ general:
 ```
 test:
 ```node
-  python3 main.py -i tests/<testfile>
+  python3 test_engine
 ```
 ### completed tasks:
 - [x] implement general structure of problem
@@ -20,12 +20,13 @@ test:
 - [x] complete iterative d. closer
 - [x] enable optional path, where it saves and prints out the correct path (extra)
 - [x] design and implement advanced heuristic function
+- [x] complicated and complete testing
+- [x] cut off for oscillating values
 
 ### tasks:
-- [x] complicated and complete testing
+- [ ] check documentation
 - [ ] test where greedy finds solution and iterative does not
 - [ ] unittests for functions
-- [x] cut off for ocsillating values 
 - [ ] finish up analysis
 
 ### References:
