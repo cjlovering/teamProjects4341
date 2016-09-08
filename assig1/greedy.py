@@ -3,14 +3,16 @@ from node import Node
 import queue
 import time
 
+
 from utility import goal_test
+from utility import closer
 from heuristics import heuristic
 
 # greedy algorithm
 def solve(problem):
   nodeCount = 0
   maxDepth = 0
-  current = Node(heuristic(problem.startnum, problem.targetnum), problem.startnum, 0, None, None) 
+  current = Node(heuristic(problem.startnum, problem.targetnum), problem.startnum, 0, None, None)
   # h cost, data, depth, last node, val, operation
   frontier = queue.PriorityQueue() #sorted on cost of operation
   frontier.put(current)
@@ -19,7 +21,7 @@ def solve(problem):
   frontierSet.add(current)
   start_time = time.time()
   best = current
-  
+
   while (time.time() - start_time  < problem.time - 0.0001): #while we have time
     if frontier.empty():
       break
@@ -27,7 +29,7 @@ def solve(problem):
     if goal_test(current.data, problem.targetnum):
       break #success
     explored.add(current)
-    
+
     depth = current.depth + 1
     if depth > maxDepth:
       maxDepth = depth
@@ -35,26 +37,20 @@ def solve(problem):
     for op in problem.ops:
       child = problem.evalOp(current.data, op)
       if child not in explored or frontierSet:
-        nodeCount += 1        
+        nodeCount += 1
         child_node = Node(heuristic(child, problem.targetnum), child, depth, current, op)
-        if closer(best.data, child, problem.targetnum):
+        if closer(best.cost, child, problem.targetnum):
           best = child_node
         elif problem.cut_off(child):
           break
         frontier.put(child_node)
-        frontierSet.add(child) 
+        frontierSet.add(child)
       #TODO: this?
       #elif child in frontierSet:
         #if new heuristic is lower then replace frontier node with this one
        # print("todo")
-  
+
   if heuristic(best.data, problem.targetnum) <= heuristic(current.data, problem.targetnum):
     current = best
 
   return (current.data, current.depth, time.time()-start_time, nodeCount, maxDepth, current)
-
-
-# idea: probably use the same set of heuristics to det answer
-# @return true if the new val is closer than the old val 
-def closer(old, new, target):
-  return heuristic(new, target) < old
