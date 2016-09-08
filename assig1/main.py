@@ -41,7 +41,7 @@ def main(problem, debug):
     print("Nodes expanded: %r" % nodes)
     print("Max depth traversed: %r" % max)
 
-  return (problem.alg, error, val, steps, time, nodes, max)
+  return (problem.alg, error, val, steps, time, nodes, max, problem)
 
 if __name__ == "__main__":
    main( parseFile(parseCommandLine(sys.argv[1:])), True)
