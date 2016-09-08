@@ -22,11 +22,10 @@ test:
 - [x] design and implement advanced heuristic function
 
 ### tasks:
-- [ ] complicated and complete testing
+- [x] complicated and complete testing
+- [ ] test where greedy finds solution and iterative does not
 - [ ] unittests for functions
-- [ ] design scheme for replacing frontier values on improvement
-  - [ ] reimplement priority queue
-- [ ] cut off for ocsillating values 
+- [x] cut off for ocsillating values 
 - [ ] finish up analysis
 
 ### References:
