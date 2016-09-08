@@ -21,4 +21,4 @@ def abs_difference(current, target):
   return abs(current - target)
 
 def heuristic(current, problem):
-  return min([abs_difference(current, problem), sub_problems(current, problem)])
+  return min([abs_difference(current, problem.targetnum), sub_problems(current, problem)])
