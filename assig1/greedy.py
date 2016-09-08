@@ -12,7 +12,7 @@ from heuristics import heuristic
 def solve(problem):
   nodeCount = 0
   maxDepth = 0
-  current = Node(heuristic(problem.startnum, problem), problem.startnum, 0, None, None) 
+  current = Node(heuristic(problem.startnum, problem), problem.startnum, 0, None, None)
   # h cost, data, depth, last node, val, operation
   frontier = queue.PriorityQueue() #sorted on cost of operation
   frontier.put(current)
@@ -24,6 +24,8 @@ def solve(problem):
 
   while (time.time() - start_time  < problem.time - 0.0001): #while we have time
     if frontier.empty():
+      break
+    elif current.cut_off():
       break
     current = frontier.get()
     if goal_test(current.data, problem.targetnum):
@@ -37,7 +39,7 @@ def solve(problem):
     for op in problem.ops:
       child = problem.evalOp(current.data, op)
       if child not in explored or frontierSet:
-        nodeCount += 1        
+        nodeCount += 1
         child_node = Node(heuristic(child, problem), child, depth, current, op)
         if closer(best.data, child, problem.targetnum):
           best = child_node
@@ -49,8 +51,8 @@ def solve(problem):
       #elif child in frontierSet:
         #if new heuristic is lower then replace frontier node with this one
        # print("todo")
-  
-  if heuristic(best.data, problem) <= heuristic(current.data, problem):
-    current = best
 
-  return (current.data, current.depth, time.time()-start_time, nodeCount, maxDepth, current)
+  if heuristic(current.data, problem) < heuristic(best.data, problem):
+    best = current
+
+  return (best.data, best.depth, time.time()-start_time, nodeCount, maxDepth, best)

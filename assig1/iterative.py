@@ -13,14 +13,15 @@ node_count = 0
 # @param problem - the input defining all problem parametersdef solve(problem):
 def solve(problem):
   global node_count
+  global start_time
+  global best
   start_time = time.time()
   depth = 0
-  global best
   best = Node(heuristic(problem.startnum, problem), problem.startnum, 0, None, None)
   result = best
   node_count = 0
 
-  while(time.time() - start_time + 0.00001 * depth < problem.time): #while we have time + fudge factor TODO: (experiment)
+  while True: #while we have time + fudge factor TODO: (experiment)
     if cut_off(result, problem.targetnum, problem):  #cut search here: inc or found goal
       break
     result = depth_limited_search(problem, depth)
@@ -48,18 +49,21 @@ def recursive_dls(current, problem, limit):
     for op in problem.ops:
       child = problem.evalOp(current.data, op)
       child_node = Node(heuristic(child, problem), child, current.depth + 1, current, op)
-      result = recursive_dls(child_node, problem, limit - 1)
-      if cut_off(result, problem.targetnum, problem):
+      next_node = recursive_dls(child_node, problem, limit - 1)
+      if cut_off(next_node, problem.targetnum, problem):
         break
-  return result
+  return next_node
 
 # @return - if we reached the goal or hit a cut-off
-def cut_off(result, target, problem):
+def cut_off(node, target, problem):
   global best
-  if goal_test(result.data, target):
+  global start_time
+  if (time.time() - start_time) > (problem.time - 0.0001):
     return True
-  elif problem.cut_off(result.data):
+  if goal_test(node.data, target):
     return True
-  elif closer(best.data, result.data, target):
-    best = result
+  elif problem.cut_off(node.data):
+    return True
+  elif closer(best.data, node.data, target):
+    best = node
   return False
