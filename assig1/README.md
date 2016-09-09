@@ -7,7 +7,7 @@ general:
 ```
 test:
 ```node
-  python3 test_engine
+  python3 test_engine.py
 ```
 ### completed tasks:
 - [x] implement general structure of problem
@@ -22,12 +22,12 @@ test:
 - [x] design and implement advanced heuristic function
 - [x] complicated and complete testing
 - [x] cut off for oscillating values
+- [x] test where greedy finds solution and iterative does not
+- [x] unittests for functions(except for heuristics)
+- [x] finish up analysis
 
 ### tasks:
 - [ ] check documentation
-- [ ] test where greedy finds solution and iterative does not
-- [ ] unittests for functions
-- [ ] finish up analysis
 
 ### References:
 http://www.tutorialspoint.com/python/python_command_line_arguments.htm

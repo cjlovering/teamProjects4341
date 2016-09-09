@@ -3,6 +3,8 @@ import sys, getopt
 from problem import Problem
 
 #usage: python Parser.py -i tests/<filename>
+# @param argv - commandline arguments
+# @return - name of the input file
 def parseCommandLine(argv):
    inputfile = ''
    outputfile = ''
@@ -21,6 +23,8 @@ def parseCommandLine(argv):
        outputfile = arg
    return inputfile
 
+# @param inputfile - name of the input file
+# @return - problem details
 def parseFile(inputfile):
    testfile = open(inputfile, "r")
    alg = testfile.readline().strip(' \t\n\r')

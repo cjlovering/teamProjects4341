@@ -21,7 +21,7 @@ def solve(problem):
   result = best
   node_count = 0
 
-  while True: #while we have time + fudge factor TODO: (experiment)
+  while True: #while we have time + fudge factor
     if cut_off(result, problem.targetnum, problem):  #cut search here: inc or found goal
       break
     result = depth_limited_search(problem, depth)
