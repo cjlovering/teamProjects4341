@@ -15,7 +15,7 @@ class TestIterative(unittest.TestCase):
     TestIterative._test_iterative(self, p, r)
     # choose a path that works
     p1 = Problem('iterative', 5, 10, 10, [('+', 1),('*', 3)])
-    r1 = (10, 6)
+    r1 = (10, 5)
     TestIterative._test_iterative(self, p1, r1)
 
 if __name__ == '__main__':
