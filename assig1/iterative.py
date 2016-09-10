@@ -6,11 +6,8 @@ from utility import goal_test
 from utility import closer
 from heuristics import heuristic
 
-
-node_count = 0
-
 # iterative algorithm
-# @param problem - the input defining all problem parametersdef solve(problem):
+# @param problem - the input defining all problem parameters
 def solve(problem):
   global node_count
   global start_time
@@ -21,7 +18,7 @@ def solve(problem):
   result = best
   node_count = 0
 
-  while True: #while we have time + fudge factor
+  while True: # we exit due to time below
     if cut_off(result, problem.targetnum, problem):  #cut search here: inc or found goal
       break
     result = depth_limited_search(problem, depth)
@@ -29,6 +26,7 @@ def solve(problem):
 
   if closer(best.data, result.data, problem.targetnum):  #update best so far (if last iteration finds answer)
     best = result
+
   return (best.data, best.depth, time.time()-start_time, node_count, depth, best)
 
 # @param problem - the problem to solve

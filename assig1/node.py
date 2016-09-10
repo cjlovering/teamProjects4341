@@ -7,6 +7,7 @@ except ImportError:
 
 @total_ordering
 class Node:
+  # constructor
   def __init__(self, cost, data, depth, parent, op):
     self.cost = cost;
     self.data = data;
@@ -15,7 +16,7 @@ class Node:
     self.op = op
     self.index = 0
     return
-
+  # define internal functions to order nodes in a priority queue
   def __eq__(self, other):
     return ((self.cost, self.data) ==
             (other.cost, other.data))
@@ -24,10 +25,10 @@ class Node:
             (other.cost, other.data))
   def __hash__(self):
     return hash(tuple((self.cost, self.data, self.depth)))
-
   def __str__(self):
     return  str(self.data) + " " + str(self.op)
 
+  # prints the path of operations that led to this node
   def print_path(self):
       temp = self
       path = []
@@ -48,10 +49,11 @@ class Node:
           print(num, op[0], op[1])
 
   # determines if it is oscillating
+  # we ended up not using this because we weren't sure if
+  # we were allowed to 'boost' the algorithms to make 'decisions'
   # @param {node} self- the current node
   # @return {boolean}
   def cut_off(self):
-    print("SDFSDFSDFSDFSDF")
     parent = self.parent
     if parent is not None:
       grandparent = parent.parent

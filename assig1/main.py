@@ -26,7 +26,6 @@ def main(problem, debug):
   max = result[4]
   endNode = result[5]
 
-
   if debug == None or debug == True:
     try:
       endNode.print_path()
