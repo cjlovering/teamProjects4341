@@ -35,7 +35,7 @@ class Problem:
   # @param number - the number to be evaluated
   # @param op - the operation to be executed
   def evalOp(self, number, op):
-    return math.floor(operations.eval_operation(number, op[0], op[1]))
+    return (operations.eval_operation(number, op[0], op[1]))
 
   # determines if this branch should be cutoff
   # @param {number} current - the current value of the state
