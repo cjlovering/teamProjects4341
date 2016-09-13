@@ -20,4 +20,10 @@ by executing:
 ```
 
 ### tasks:
-- [ ] consider length of solutions 
+- [ ] float operators & math
+- [ ] diverse start
+	- [ ] random length
+	- [ ] 50/50 random or greedy starting position (?)
+- [ ] consider length of solutions (30 max)
+- [ ] crossover for diff lengths
+- [ ] mutation: modify, delete, add ops
