@@ -1,56 +1,40 @@
-from functools import total_ordering
-from heuristic import heuristic
+from heuristics import heuristic
 
-try:
-    import Queue as Q  # ver. < 3.0
-except ImportError:
-    import queue as Q
-
-@total_ordering
 class Organism:
   # constructor
-  def __init__(self, opSeq):
-    self.opSeq = opSeq
+  def __init__(self, op_seq):
+    self.op_seq = op_seq
     self.data = None
     self.cost = None
     self.fitness = None
     return
 
-  # define internal functions to order nodes in a priority queue
-  def __eq__(self, other):
-    return ((self.cost, self.data) ==
-            (other.cost, other.data))
-  def __lt__(self, other):
-    return ((self.cost, self.data) <
-            (other.cost, other.data))
-  def __hash__(self):
-    return hash(tuple((self.cost, self.data, self.depth)))
-  def __str__(self):
-    return  str(self.data) + " " + str(self.op)
-
   # sets a percentage to survive...
-  def setData(opSeq, problem):
+  def setData(self, problem):
     val = problem.startnum
 
     # figure out the value of doing all the sequences
-    for op in opSeq:
-      val = problem.evalOp(val, op)
+    for op in self.op_seq:
+      val = problem.eval_op(val, op)
 
     self.data = val
 
   # sets the cost to survive...
-  def setCost():
+  def setCost(self):
     self.cost = heuristic(self.data);
 
   # sets a percentage to survive...
   # @param {number} fitness - the % to be chosen for a pair
-  def setFitness(fitness):
+  def setFitness(self, fitness):
     self.fitness = fitness;
 
-  def crossover(otherOrganism):
+  def crossover(self, otherOrganism):
+    #calc the new_ops
+    new_ops = []
+    child = Organism(new_ops)
     #do the cross over
     return
 
-  def mutate():
+  def mutate(self):
     #mutate
     return

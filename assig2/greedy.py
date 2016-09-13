@@ -2,6 +2,7 @@ from problem import Problem
 from node import Node
 import queue
 import time
+import math
 
 from utility import goal_test
 from utility import closer
@@ -36,7 +37,7 @@ def solve(problem):
 
     # apply all operations to the current node
     for op in problem.ops:
-      child = problem.evalOp(current.data, op)
+      child = problem.eval_op(current.data, op)
       if child not in explored or frontierSet:
         nodeCount += 1  # bookkeeping
         child_node = Node(heuristic(child, problem), child, depth, current, op)

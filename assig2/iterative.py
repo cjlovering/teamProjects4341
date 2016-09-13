@@ -45,7 +45,7 @@ def recursive_dls(current, problem, limit):
     return current
   else:
     for op in problem.ops:
-      child = problem.evalOp(current.data, op)
+      child = problem.eval_op(current.data, op)
       child_node = Node(heuristic(child, problem), child, current.depth + 1, current, op)
       next_node = recursive_dls(child_node, problem, limit - 1)
 

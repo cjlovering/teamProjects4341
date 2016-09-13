@@ -2,6 +2,7 @@ from problem import Problem
 from node import Node
 import time
 import math
+import random
 from utility import goal_test
 from utility import closer
 from heuristics import heuristic
@@ -20,7 +21,19 @@ def solve(problem):
   result = best
   node_count = 0
 
+  starting_op_count = round( math.log(problem.targetnum) / math.log(problem.startnum)) + 1
   population = []
+
+  m = len(problem.ops)
+  n = starting_op_count
+  starting_population_count = round( (math.factorial(m) / (math.factorial(n) * math.factorial(m - n))) / 2 )
+
+  for org in range(starting_population_count):
+    op_seq = []
+    for op in range(starting_op_count):
+      op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
+    population.append(Organism(op_seq))
+
   while True: # we exit due to time below
     cut_off(population, start_time, problem.time)
     new_population = []
@@ -35,23 +48,28 @@ def solve(problem):
 
   return (best.data, best.depth, time.time()-start_time, node_count, depth, best)
 
-  def random_selection(population, fitness):
+def random_selection(population, fitness):
+  return population[random.randint(0, len(population) - 1)]
 
-    for org in population:
-       # consider
+def cut_off(population, start_time, end_time):
+  if time.time()-start_time > end_time - 0.001:
+    return True
+  found = False
+  for org in population:
+    print(org)
+    #found =  org.data
+  return found
 
-  def cut_off(population, start_time, end_time):
-    if time.time()-start_time > end_time - 0.001:
-      return True
-    found = False
-    for org in population:
-      #found =  org.data
+def small_random_chance():
+  #random > variable
+  return False
 
-    return found
+def mutate(child):
+  return child
 
-  def small_random_chance():
-    #random > variable
-    return false
+def cull(population):
+  return population
 
-  def cull(population):
-    return population
+def fitness():
+  #TODO: implement
+  return 5;
