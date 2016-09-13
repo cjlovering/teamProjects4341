@@ -6,17 +6,24 @@ from problem import Problem
 from node import Node
 import greedy
 import iterative
+import genetic
 
 # constants
 ITERATIVE = 'iterative'
 GREEDY = 'greedy'
+GENETIC = 'genetic'
 
 # general system
 def main(problem, debug):
   if GREEDY == problem.alg:
     result = greedy.solve(problem)
-  else:
+  elif ITERATIVE == problem.alg:
     result = iterative.solve(problem)
+  else:
+    result = genetic.solve(problem)
+    return; #TODO fix printing below
+
+
 
   val = result[0]
   error = abs(val - problem.targetnum)
