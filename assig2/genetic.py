@@ -26,7 +26,7 @@ def solve(problem):
 
   m = len(problem.ops)
   n = starting_op_count
-  starting_population_count = round( (math.factorial(m) / (math.factorial(n) * math.factorial(m - n))) / 2 )
+  starting_population_count = 5; #round( (math.factorial(m) / (math.factorial(n) * math.factorial(m - n))) / 2 )
 
   for org in range(starting_population_count):
     op_seq = []
@@ -37,19 +37,41 @@ def solve(problem):
   while True: # we exit due to time below
     cut_off(population, start_time, problem.time)
     new_population = []
+    calculate_fitness(population, problem)
+
     for i in range(len(population)):
-      x = random_selection(population, fitness);
-      y = random_selection(population, fitness);
+      x = random_selection(population);
+      y = random_selection(population);
       child = x.crossover(y)
       if small_random_chance():
         child = mutate(child)
-    cull(population)
+      new_population.append(child)
     population = new_population
 
   return (best.data, best.depth, time.time()-start_time, node_count, depth, best)
 
-def random_selection(population, fitness):
-  return population[random.randint(0, len(population) - 1)]
+def calculate_fitness(population, problem):
+  sum_costs = 0
+  charlie_s_magic_number = 2 / len(population)
+  for org in population:
+    org.set_data(problem)
+    org.calculate_cost(problem)
+    sum_costs += org.cost
+  for org in population:
+    org.set_fitness(charlie_s_magic_number - org.cost / sum_costs)
+
+def random_selection(population):
+  percentile = random.uniform(0.0, 1.0) #ex 0.11
+  current_percent = 0
+  selection = None
+
+  for org in population:
+    current_percent += org.fitness
+    if percentile <= current_percent:
+      selection = org
+      break
+
+  return selection
 
 def cut_off(population, start_time, end_time):
   if time.time()-start_time > end_time - 0.001:
@@ -66,10 +88,3 @@ def small_random_chance():
 
 def mutate(child):
   return child
-
-def cull(population):
-  return population
-
-def fitness():
-  #TODO: implement
-  return 5;

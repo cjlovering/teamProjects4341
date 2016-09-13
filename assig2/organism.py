@@ -10,7 +10,7 @@ class Organism:
     return
 
   # sets a percentage to survive...
-  def setData(self, problem):
+  def set_data(self, problem):
     val = problem.startnum
 
     # figure out the value of doing all the sequences
@@ -20,12 +20,12 @@ class Organism:
     self.data = val
 
   # sets the cost to survive...
-  def setCost(self):
-    self.cost = heuristic(self.data);
+  def calculate_cost(self, problem):
+    self.cost = heuristic(self.data, problem);
 
   # sets a percentage to survive...
   # @param {number} fitness - the % to be chosen for a pair
-  def setFitness(self, fitness):
+  def set_fitness(self, fitness):
     self.fitness = fitness;
 
   def crossover(self, otherOrganism):
@@ -33,7 +33,7 @@ class Organism:
     new_ops = []
     child = Organism(new_ops)
     #do the cross over
-    return
+    return self
 
   def mutate(self):
     #mutate
