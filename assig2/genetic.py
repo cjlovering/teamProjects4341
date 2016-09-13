@@ -36,6 +36,7 @@ def solve(problem):
   return (best.data, best.depth, time.time()-start_time, node_count, depth, best)
 
   def random_selection(population, fitness):
+
     for org in population:
        # consider
 

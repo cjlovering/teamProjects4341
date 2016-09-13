@@ -47,7 +47,7 @@ class Organism:
   def setFitness(fitness):
     self.fitness = fitness;
 
-  def crossOver(otherOrganism):
+  def crossover(otherOrganism):
     #do the cross over
     return
 
