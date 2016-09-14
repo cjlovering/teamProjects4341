@@ -12,14 +12,13 @@ from organism import Organism
 # genetic algorithm
 # @param problem - the input defining all problem parameters
 def solve(problem):
-  global node_count
+  global organism_size
   global start_time
   global best
   start_time = time.time()
-  depth = 0
+  organism_size = 0
   best = Node(heuristic(problem.startnum, problem), problem.startnum, 0, None, None)
   result = best
-  node_count = 0
 
   starting_op_count = round( math.log(problem.targetnum) / math.log(problem.startnum)) + 1
   population = []
@@ -48,7 +47,7 @@ def solve(problem):
       new_population.append(child)
     population = new_population
 
-  return (best.data, best.depth, time.time()-start_time, node_count, depth, best)
+  return (best.data, organism_size, time.time()-start_time, population.size(), generation)
 
 def calculate_fitness(population, problem):
   sum_costs = 0

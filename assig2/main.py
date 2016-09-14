@@ -4,34 +4,19 @@ from parser import parseFile
 from parser import parseCommandLine
 from problem import Problem
 from node import Node
-import greedy
-import iterative
 import genetic
-
-# constants
-ITERATIVE = 'iterative'
-GREEDY = 'greedy'
-GENETIC = 'genetic'
 
 # general system
 def main(problem, debug):
-  if GREEDY == problem.alg:
-    result = greedy.solve(problem)
-  elif ITERATIVE == problem.alg:
-    result = iterative.solve(problem)
-  else:
-    result = genetic.solve(problem)
-    return; #TODO fix printing below
-
-
+  result = genetic.solve(problem)
+  return; #TODO fix printing below
 
   val = result[0]
   error = abs(val - problem.targetnum)
-  steps = result[1]
+  organism = result[1]
   time = result[2]
-  nodes = result[3]
-  max = result[4]
-  endNode = result[5]
+  population = result[3]
+  generation = result[4]
 
   if debug == None or debug == True:
     try:
@@ -39,15 +24,14 @@ def main(problem, debug):
     except:
       print("No steps taken...")
 
-    print("Algorithm used: " + problem.alg)
-    print("Error: %r" % error)
     print("Value found: %r" % val)
-    print("Steps taken: %r" % steps)
+    print("Error: %r" % error)
+    print("Size of organism: %r" % organism)
     print("Time taken: %r" % time)
-    print("Nodes expanded: %r" % nodes)
-    print("Max depth traversed: %r" % max)
+    print("Population size: %r" % population)
+    print("Number of generations: %r" % generation)
 
-  return (problem.alg, error, val, steps, time, nodes, max, problem)
+  return (error, organism, time, population, generation)
 
 if __name__ == "__main__":
    main( parseFile(parseCommandLine(sys.argv[1:])), True)
