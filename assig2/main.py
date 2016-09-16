@@ -9,6 +9,7 @@ import genetic
 # general system
 def main(problem, debug):
   result = genetic.solve(problem)
+  print(result)
   return;
 
   val = result[0]
