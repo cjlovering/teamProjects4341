@@ -19,10 +19,10 @@ def solve(problem):
   organism_size = 0
   generation = 0
   mutation_rate = 0.05 #not sure
-  best = problem.startnum
+  best = None
   target = problem.targetnum
   result = best
-
+  
   starting_op_count = 5;#round( math.log(problem.targetnum) / math.log(problem.startnum)) + 1
   population = []
 
@@ -39,7 +39,8 @@ def solve(problem):
   while True: # we exit due to time below
     for org in population:
       org.set_data(problem)
-    cut_off(population, start_time, problem.time, target)
+    if cut_off(population, start_time, problem.time, target):
+      break;
     new_population = []
     calculate_fitness(population, problem)
 
@@ -55,7 +56,6 @@ def solve(problem):
       new_population.append(child_one)
       new_population.append(child_two)
     population = new_population
-
   return (best.data, organism_size, time.time()-start_time, len(population), generation)
 
 def calculate_fitness(population, problem):
@@ -85,18 +85,22 @@ def random_selection(population):
 
 def cut_off(population, start_time, end_time, target):
   global best
+  if best is None:
+    best = population[0];
+
   if time.time()-start_time > end_time - 0.001:
     return True
   found = False
   i = 0
   for org in population:
-    print(i, org.data)
+    #print(i, org.data)
     i += 1
     if goal_test(org.data, target):
       found = True
       break
-    if closer(best, org.data, target):
-      best = org.data
+    if closer(best.data, org.data, target):
+      best = org
+    
   return found
 
 def small_random_chance():
