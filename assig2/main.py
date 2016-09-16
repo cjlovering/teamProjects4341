@@ -9,7 +9,7 @@ import genetic
 # general system
 def main(problem, debug):
   result = genetic.solve(problem)
-  return; #TODO fix printing below
+  return;
 
   val = result[0]
   error = abs(val - problem.targetnum)

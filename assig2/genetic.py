@@ -1,5 +1,4 @@
 from problem import Problem
-from node import Node
 import time
 import math
 import random
@@ -15,12 +14,16 @@ def solve(problem):
   global organism_size
   global start_time
   global best
+  global generation
   start_time = time.time()
   organism_size = 0
-  best = Node(heuristic(problem.startnum, problem), problem.startnum, 0, None, None)
+  generation = 0
+  mutation_rate = 0.05 #not sure
+  best = problem.startnum
+  target = problem.targetnum
   result = best
 
-  starting_op_count = round( math.log(problem.targetnum) / math.log(problem.startnum)) + 1
+  starting_op_count = 5;#round( math.log(problem.targetnum) / math.log(problem.startnum)) + 1
   population = []
 
   m = len(problem.ops)
@@ -34,20 +37,26 @@ def solve(problem):
     population.append(Organism(op_seq))
 
   while True: # we exit due to time below
-    cut_off(population, start_time, problem.time)
+    for org in population:
+      org.set_data(problem)
+    cut_off(population, start_time, problem.time, target)
     new_population = []
     calculate_fitness(population, problem)
 
     for i in range(len(population)):
       x = random_selection(population);
       y = random_selection(population);
-      child = x.crossover(y)
+      child_one = x.crossover(y)
+      child_two = y.crossover(x)
+      generation += 1
       if small_random_chance():
-        child = mutate(child)
-      new_population.append(child)
+        child_one = mutate(child_one)
+        child_two = mutate(child_two)
+      new_population.append(child_one)
+      new_population.append(child_two)
     population = new_population
 
-  return (best.data, organism_size, time.time()-start_time, population.size(), generation)
+  return (best.data, organism_size, time.time()-start_time, len(population), generation)
 
 def calculate_fitness(population, problem):
   sum_costs = 0
@@ -60,6 +69,8 @@ def calculate_fitness(population, problem):
     org.set_fitness(charlie_s_magic_number - org.cost / sum_costs)
 
 def random_selection(population):
+  global generation
+  generation += 1
   percentile = random.uniform(0.0, 1.0) #ex 0.11
   current_percent = 0
   selection = None
@@ -72,13 +83,20 @@ def random_selection(population):
 
   return selection
 
-def cut_off(population, start_time, end_time):
+def cut_off(population, start_time, end_time, target):
+  global best
   if time.time()-start_time > end_time - 0.001:
     return True
   found = False
+  i = 0
   for org in population:
-    print(org)
-    #found =  org.data
+    print(i, org.data)
+    i += 1
+    if goal_test(org.data, target):
+      found = True
+      break
+    if closer(best, org.data, target):
+      best = org.data
   return found
 
 def small_random_chance():
@@ -86,4 +104,7 @@ def small_random_chance():
   return False
 
 def mutate(child):
+  global generation
+  generation += 1
+
   return child

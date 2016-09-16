@@ -1,3 +1,4 @@
+import random
 from heuristics import heuristic
 
 class Organism:
@@ -28,13 +29,14 @@ class Organism:
   def set_fitness(self, fitness):
     self.fitness = fitness;
 
-  def crossover(self, otherOrganism):
+  def crossover(self, other_org):
     #calc the new_ops
     new_ops = []
     child = Organism(new_ops)
-    #do the cross over
-    return self
+    r = random.randint(0, len(self.op_seq))
+
+    return Organism(self.op_seq[:r]+other_org.op_seq[r:])
 
   def mutate(self):
     #mutate
-    return
+    return self
