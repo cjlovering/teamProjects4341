@@ -29,7 +29,7 @@ def solve(problem):
 
   m = len(problem.ops)
   n = starting_op_count
-  starting_population_count = 5; #round( (math.factorial(m) / (math.factorial(n) * math.factorial(m - n))) / 2 )
+  starting_population_count = 150; #round( (math.factorial(m) / (math.factorial(n) * math.factorial(m - n))) / 2 )
 
   for org in range(starting_population_count):
     op_seq = []
@@ -37,22 +37,18 @@ def solve(problem):
       op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
     population.append(Organism(op_seq))
 
+  # data & fitness value calculations
+  calculate_fitness(population, problem)
+
   while True: # we exit due to time below
     generation += 1
-    for org in population:
-      org.set_data(problem)
+    
     if cut_off(population, start_time, problem.time, target):
       break;
     
     new_population = []
-    calculate_fitness(population, problem)
 
-    # elitism
-    population.sort(key=lambda x: x.fitness, reverse=True)
-
-    for i in range(elitism):
-      new_population.append(population[i])
-
+    # breeding time
     for i in range(len(population)):
       x = random_selection(population);
       y = random_selection(population);
@@ -60,9 +56,37 @@ def solve(problem):
       if small_random_chance():
         child = mutate(child)
       new_population.append(child)
-    
-    # culling
-    #population.sort(key=lambda x: x.fitness, reverse=True) (remove the last n)
+
+    # elitism
+    population.sort(key=lambda x: x.cost, reverse=True)
+
+    for i in range(elitism):
+      new_population.append(population[i])
+      
+    # data
+    for org in new_population:
+      org.set_data(problem)
+      org.calculate_cost(problem)
+
+    # culling the invalids
+    invalids = []
+    for orgIndex in range(len(new_population)):
+      if new_population[orgIndex].invalid:
+        invalids.append(orgIndex)
+    invalids.reverse()
+    for index in invalids:
+      del new_population[index]
+
+    # culling the weak
+    to_cull = len(new_population) - starting_population_count
+    if to_cull > 0:
+      new_population.sort(key=lambda x: x.cost, reverse=False)
+      del new_population[(len(new_population) - to_cull):]
+
+    # finding the fitness
+    calculate_fitness(new_population, problem)
+
+    # setting the next generation
     population = new_population
   
   return (best.data, organism_size, time.time()-start_time, len(population), generation)
@@ -70,7 +94,7 @@ def solve(problem):
 def calculate_fitness(population, problem):
   sum_costs = 0
   for org in population:
-    org.set_data(problem)
+    org.set_data(problem) # TODO: factor out
     org.calculate_cost(problem)
     sum_costs += org.cost
   for org in population:
@@ -101,7 +125,6 @@ def cut_off(population, start_time, end_time, target):
   found = False
   i = 0
   for org in population:
-    #print(i, org.data)
     i += 1
     if goal_test(org.data, target):
       found = True
@@ -114,7 +137,3 @@ def cut_off(population, start_time, end_time, target):
 def small_random_chance():
   #random > variable
   return False
-
-def mutate(child):
-
-  return child

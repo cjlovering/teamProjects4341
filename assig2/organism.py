@@ -8,6 +8,7 @@ class Organism:
     self.data = None
     self.cost = None
     self.fitness = None
+    self.invalid = False
     return
 
   # sets a percentage to survive...
@@ -16,10 +17,11 @@ class Organism:
 
     # figure out the value of doing all the sequences
     for op in self.op_seq:
-      print("Val: %r" % val)
-      print(op)
-      val = problem.eval_op(val, op)
-
+      try:
+        val = problem.eval_op(val, op)
+      except:
+        self.invalid = True
+        break
     self.data = val
 
   # sets the cost to survive...
