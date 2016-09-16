@@ -37,6 +37,7 @@ def solve(problem):
     population.append(Organism(op_seq))
 
   while True: # we exit due to time below
+    generation += 1
     for org in population:
       org.set_data(problem)
     if cut_off(population, start_time, problem.time, target):
@@ -47,14 +48,10 @@ def solve(problem):
     for i in range(len(population)):
       x = random_selection(population);
       y = random_selection(population);
-      child_one = x.crossover(y)
-      child_two = y.crossover(x)
-      generation += 1
+      child = x.crossover(y)
       if small_random_chance():
-        child_one = mutate(child_one)
-        child_two = mutate(child_two)
-      new_population.append(child_one)
-      new_population.append(child_two)
+        child = mutate(child)
+      new_population.append(child)
     population = new_population
   return (best.data, organism_size, time.time()-start_time, len(population), generation)
 
@@ -69,8 +66,6 @@ def calculate_fitness(population, problem):
     org.set_fitness(charlie_s_magic_number - org.cost / sum_costs)
 
 def random_selection(population):
-  global generation
-  generation += 1
   percentile = random.uniform(0.0, 1.0) #ex 0.11
   current_percent = 0
   selection = None
@@ -108,7 +103,5 @@ def small_random_chance():
   return False
 
 def mutate(child):
-  global generation
-  generation += 1
 
   return child

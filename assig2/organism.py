@@ -16,6 +16,8 @@ class Organism:
 
     # figure out the value of doing all the sequences
     for op in self.op_seq:
+      print("Val: %r" % val)
+      print(op)
       val = problem.eval_op(val, op)
 
     self.data = val
