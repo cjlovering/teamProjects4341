@@ -25,17 +25,17 @@ class Organism:
         break
     self.data = val
 
-  # print seq 
+  # print seq
   def print_seq(self, start, problem):
     val = start
 
     for op in range(len(self.op_seq)):
       num = problem.eval_op(val, self.op_seq[op])
-      
-      if op == len(self.op_seq) - 1 :
+
+      if op == len(self.op_seq):
         print(num)
       else:
-        print(val, self.op_seq[op][0], self.op_seq[op][1], '=', num)  
+        print(val, self.op_seq[op][0], self.op_seq[op][1], '=', num)
       val = num
 
   # sets the cost to survive...

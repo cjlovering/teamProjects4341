@@ -24,7 +24,7 @@ def solve(problem, params):
   greedy_huh = params[8]  # if we add operators greedily to start
   mutation_role_percents = params[9] # percent to delete, add, or modify
   children_num = params[10] # number of children each pair of parents should create
-  
+
   start_time = time.time()
 
   generation = 0
@@ -41,21 +41,21 @@ def solve(problem, params):
     for op in range(starting_op_count):
       op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
     population.append(Organism(op_seq))
-    
+
   # data & fitness value calculations
   for org in population:
     org.set_data(problem)
     org.calculate_cost(problem)
   calculate_fitness(population)
 
-  while True: 
+  while True:
     # bookkeeping
     generation += 1
-    
+
     # check if we're done! (or run out of time)
     if cut_off(population, start_time, problem.time, target):
       break;
-    
+
     # breeding time
     new_population = []
     for i in range(len(population)):
@@ -70,7 +70,7 @@ def solve(problem, params):
     population.sort(key=lambda x: x.cost, reverse=True)
     for i in range(elitism):
       new_population.append(population[i])
-      
+
     # calculate values and set the costs
     for org in new_population:
       org.set_data(problem)
@@ -78,7 +78,7 @@ def solve(problem, params):
 
     # culling the invalids
     cull_the_invalids(new_population)
- 
+
     # culling the weak
     cull_the_weak(new_population, starting_population)
 
@@ -88,18 +88,17 @@ def solve(problem, params):
     # setting the next generation
     population = new_population
 
-    
+
   # get the best so far
   population.sort(key=lambda x: x.cost, reverse=False)
   best = population[0]
-  
+
   return (best, time.time()-start_time, len(population), generation)
 
 def cull_the_invalids(new_population):
   invalids = []
   for orgIndex in range(len(new_population)):
     if new_population[orgIndex].invalid:
-      print(orgIndex)
       invalids.append(orgIndex)
   invalids.reverse()
   for index in invalids:
@@ -153,4 +152,3 @@ def cut_off(population, start_time, end_time, target):
 # @return {Boolean} - if a small random chance occured!
 def small_random_chance(mutation_chance):
   return random.uniform(0.0, 1.) < mutation_chance
-
