@@ -1,105 +1,122 @@
-from problem import Problem
 import time
 import math
 import random
+
+from problem import Problem
 from utility import goal_test
 from utility import closer
 from heuristics import heuristic
 from organism import Organism
 
-
 # genetic algorithm
 # @param problem - the input defining all problem parameters
-def solve(problem):
-  global organism_size
-  global start_time
-  global best
+def solve(problem, params):
   global generation
-  start_time = time.time()
-  organism_size = 0
-  generation = 0
-  mutation_rate = 0.05 #not sure
-  best = None
-  target = problem.targetnum
-  result = best
-  elitism = 1
+
+  minOp = params[0]
+  maxOp = params[1]
+  elitism = params[2]
+  starting_population = params[3]
+  mutation_chance = params[4]
+  crossover_chance = params[5]
+  threshold = params[6]
   
-  starting_op_count = 5;#round( math.log(problem.targetnum) / math.log(problem.startnum)) + 1
+  start_time = time.time()
+
+  generation = 0
+
+  target = problem.targetnum
+
   population = []
 
-  m = len(problem.ops)
-  n = starting_op_count
-  starting_population_count = 150; #round( (math.factorial(m) / (math.factorial(n) * math.factorial(m - n))) / 2 )
-
-  for org in range(starting_population_count):
+  # create the initial population
+  for org in range(starting_population):
     op_seq = []
+    starting_op_count = random.randint(minOp, maxOp) #see how we do!
     for op in range(starting_op_count):
       op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
     population.append(Organism(op_seq))
 
   # data & fitness value calculations
-  calculate_fitness(population, problem)
+  for org in population:
+    org.set_data(problem)
+    org.calculate_cost(problem)
+  calculate_fitness(population)
 
-  while True: # we exit due to time below
+
+  while True: 
+    # bookkeeping
     generation += 1
     
+    # check if we're done! (or run out of time)
     if cut_off(population, start_time, problem.time, target):
       break;
     
-    new_population = []
-
     # breeding time
+    new_population = []
     for i in range(len(population)):
       x = random_selection(population);
       y = random_selection(population);
       child = x.crossover(y)
-      if small_random_chance():
-        child = mutate(child)
+      if small_random_chance(mutation_chance):
+        child.mutate()
       new_population.append(child)
 
     # elitism
     population.sort(key=lambda x: x.cost, reverse=True)
-
     for i in range(elitism):
       new_population.append(population[i])
       
-    # data
+    # calculate values and set the costs
     for org in new_population:
       org.set_data(problem)
       org.calculate_cost(problem)
 
     # culling the invalids
-    invalids = []
-    for orgIndex in range(len(new_population)):
-      if new_population[orgIndex].invalid:
-        invalids.append(orgIndex)
-    invalids.reverse()
-    for index in invalids:
-      del new_population[index]
-
+    cull_the_invalids(new_population)
+ 
     # culling the weak
-    to_cull = len(new_population) - starting_population_count
-    if to_cull > 0:
-      new_population.sort(key=lambda x: x.cost, reverse=False)
-      del new_population[(len(new_population) - to_cull):]
+    cull_the_weak(new_population, starting_population)
 
     # finding the fitness
-    calculate_fitness(new_population, problem)
+    calculate_fitness(new_population)
 
     # setting the next generation
     population = new_population
-  
-  return (best.data, organism_size, time.time()-start_time, len(population), generation)
 
-def calculate_fitness(population, problem):
+    
+  # get the best so far
+  population.sort(key=lambda x: x.cost, reverse=False)
+  best = population[0]
+  
+  return (best, time.time()-start_time, len(population), generation)
+
+def cull_the_invalids(new_population):
+  invalids = []
+  for orgIndex in range(len(new_population)):
+    if new_population[orgIndex].invalid:
+      print(orgIndex)
+      invalids.append(orgIndex)
+  invalids.reverse()
+  for index in invalids:
+    del new_population[index]
+
+def cull_the_weak(new_population, starting_population_count):
+  to_cull = len(new_population) - starting_population_count
+  if to_cull > 0:
+    new_population.sort(key=lambda x: x.cost, reverse=False)
+    del new_population[(len(new_population) - to_cull):]
+
+# @param population - the current set of organisms
+def calculate_fitness(population):
   sum_costs = 0
   for org in population:
-    org.set_data(problem) # TODO: factor out
-    org.calculate_cost(problem)
     sum_costs += org.cost
   for org in population:
     org.set_fitness(1 - (org.cost / sum_costs))
 
+# @param population - the current set of organisms
+# @return - returns a random organism from the given population
 def random_selection(population):
   percentile = random.uniform(0.0, len(population) - 1) #this is the sum of all fitness values
   current_percent = 0
@@ -115,25 +132,21 @@ def random_selection(population):
       last_percent = current_percent
   return selection
 
+# @param population - the current set of organisms
+# @param start_time - when we started
+# @param end_time - how much time we're alloted
+# @param target - the number we're aiming for, the correct answer!
+# @return {Boolean} - returns if we're done searching or not
 def cut_off(population, start_time, end_time, target):
-  global best
-  if best is None:
-    best = population[0];
-
   if time.time()-start_time > end_time - 0.001:
     return True
-  found = False
-  i = 0
   for org in population:
-    i += 1
     if goal_test(org.data, target):
-      found = True
-      break
-    if closer(best.data, org.data, target):
-      best = org
-    
-  return found
-
-def small_random_chance():
-  #random > variable
+      return True
   return False
+
+# @param params - the object containing paramets for this run of the proble,
+# @return {Boolean} - if a small random chance occured!
+def small_random_chance(mutation_chance):
+  return random.uniform(0.0, 1.) < mutation_chance
+

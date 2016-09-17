@@ -41,6 +41,6 @@ class Organism:
 
     return Organism(self.op_seq[:r]+other_org.op_seq[r:])
 
+  # mutate
   def mutate(self):
-    #mutate
     return self
