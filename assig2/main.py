@@ -32,7 +32,7 @@ def main(problem, debug, params):
     print("Population size: %r" % population)
     print("Number of generations: %r" % generation)
 
-  return (val, error, size, time, generation)
+  return (error, size, time, generation)
 
 if __name__ == "__main__":
    main( parseFile(parseCommandLine(sys.argv[1:])), True, None)

@@ -53,7 +53,7 @@ class Organism:
     child = Organism(new_ops)
     r = random.randint(0, min(len(self.op_seq), len(other_org.op_seq)))
 
-    return Organism(self.op_seq[:r]+other_org.op_seq[r:])
+    return Organism(self.op_seq[r:]+other_org.op_seq[:r])
 
   # mutate
   def mutate(self, mut_index, problem):

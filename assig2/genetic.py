@@ -56,7 +56,6 @@ def solve(problem, params):
         except:
           op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
       else:
-        #if r > 0.5 random select
         op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
     population.append(Organism(op_seq))
 
@@ -85,7 +84,7 @@ def solve(problem, params):
       new_population.append(child)
 
     # elitism
-    population.sort(key=lambda x: x.cost, reverse=True)
+    population.sort(key=lambda x: x.cost, reverse=False)
     for i in range(elitism):
       if i < len(population) / 2:  # no more than 1/2 the population
         new_population.append(population[i])
@@ -110,7 +109,12 @@ def solve(problem, params):
 
   # get the best so far
   population.sort(key=lambda x: x.cost, reverse=False)
-  best = population[0]
+  try:
+    best = population[0]
+  except:
+    print(population)
+    print(starting_population)
+    print(problem.ops)
 
   return (best, time.time()-start_time, len(population), generation)
 
@@ -126,7 +130,7 @@ def cull_the_invalids(new_population):
 def cull_the_weak(new_population, starting_population_count):
   to_cull = len(new_population) - starting_population_count
   if to_cull > 0:
-    new_population.sort(key=lambda x: x.cost, reverse=False)
+    new_population.sort(key=lambda x: x.cost, reverse=True)
     del new_population[(len(new_population) - to_cull):]
 
 # @param population - the current set of organisms

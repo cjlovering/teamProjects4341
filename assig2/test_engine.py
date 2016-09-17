@@ -16,7 +16,7 @@ from test_operations import TestOperation
 iterations = 100
 
 # problem params
-values_vals = [1, 2, 3, 0.5, 0.2, 0.1, -1, -2, -3, -0.5, -0.2, -0.1, -5]
+values_vals = [1, 2, 3, 0.5, 5, 2, 3, -1, -0.2, -5]
 goal_vals = [-5, 0, 20, 100]
 start_vals = [-5, 0, 10]
 times_vals = [0.5, 1]
@@ -77,7 +77,7 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
-    results.append([result, param])
+    results.append([result, param[2]])
   save(results, problem, "elitism", index)
   elistism = 1
   params = []
@@ -89,7 +89,7 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
-    results.append([result, param])
+    results.append([result, param[3]])
   save(results, problem, "starting_population", index)
   starting_population = 150
   params = []
@@ -102,7 +102,7 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
-    results.append([result, param])
+    results.append([result, param[4]])
   save(results, problem, "mutation_chance", index)
   mutation_chance = 0.05
   params = []
@@ -114,7 +114,7 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
-    results.append([result, param])
+    results.append([result, param[10]])
   save(results, problem, "children_num", index)
   children_num = 1
   params = []
@@ -126,19 +126,18 @@ def save(results, problem, name, index):
   target = open(filename, 'w')
   for result_pair in results:
     output = result_pair[0]
-    params = result_pair[1]
+    param = result_pair[1]
     for param in output:
       target.write(str(param))
       target.write(',')
-    for param in params:
-      target.write(str(param))
-      target.write(',')
+
+    target.write(str(param))
+    target.write(',')
     target.write('\n')
   target.close()
 
 max_problems = 1
 problems = generate_problems()
 for p in range(len(problems)):
-  if p > max_problems:
-    test(problems[p], p)
+  test(problems[p], p)
 
