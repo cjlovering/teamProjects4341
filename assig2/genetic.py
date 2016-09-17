@@ -62,7 +62,7 @@ def solve(problem, params):
       x = random_selection(population);
       y = random_selection(population);
       child = x.crossover(y)
-      if small_random_chance(mutation_chance):
+      if small_random_chance(mutation_chance) and len(child.op_seq) > 1:
         child.mutate(mutation_role_percents, problem)
       new_population.append(child)
 

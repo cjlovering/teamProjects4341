@@ -51,7 +51,7 @@ class Organism:
     #calc the new_ops
     new_ops = []
     child = Organism(new_ops)
-    r = random.randint(0, len(self.op_seq))
+    r = random.randint(0, min(len(self.op_seq), len(other_org.op_seq)))
 
     return Organism(self.op_seq[:r]+other_org.op_seq[r:])
 
