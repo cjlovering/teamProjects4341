@@ -11,6 +11,13 @@ from organism import Organism
 # genetic algorithm
 # @param problem - the input defining all problem parameters
 def solve(problem, params):
+  try:
+    r = _solve(problem, params)
+  except:
+    return None  # there is no solution (only invalids)
+
+# genetic algorithm
+def _solve(problem, params):
   global generation
 
   minOp = params[0]
@@ -109,10 +116,7 @@ def solve(problem, params):
 
   # get the best so far
   population.sort(key=lambda x: x.cost, reverse=False)
-  try:
-    best = population[0]
-  except:
-    return False  #invalid start
+  best = population[0]
 
   return (best, time.time()-start_time, len(population), generation)
 
