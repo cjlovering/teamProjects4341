@@ -16,10 +16,10 @@ from test_operations import TestOperation
 iterations = 100
 
 # problem params
-values_vals = [1, 2, 3, 0.5, 0.2, 0.1, 10, 20, -1, -2, -3, -0.5, -0.2, -0.1, -10, -20]
-goal_vals = [-100, -50, 0, 50, 100]
-start_vals = [-100, -50, 0, 50, 100]
-times_vals = [0.5, 1, 3, 10]
+values_vals = [1, 2, 3, 0.5, 0.2, 0.1, -1, -2, -3, -0.5, -0.2, -0.1, -5]
+goal_vals = [-5, 0, 20, 100]
+start_vals = [-5, 0, 10]
+times_vals = [0.5, 1]
 operator_count_range = 25
 operators_vals = ['+', '-', '*', '^', '/']
 alg = 'genetic'
@@ -127,7 +127,6 @@ def save(results, problem, name, index):
   for result_pair in results:
     output = result_pair[0]
     params = result_pair[1]
-
     for param in output:
       target.write(str(param))
       target.write(',')
