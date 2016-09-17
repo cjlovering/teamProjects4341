@@ -14,6 +14,10 @@ def main(problem, debug, params):
     # [minOp, maxOp, elitism, starting_population, mutation_chance, crossover_chance, threshold, random_start, greedy_random, mutation_roles, children_num]
   result = genetic.solve(problem, params)
 
+  if result is None:
+    print("there is no solution: only invalids")
+    return None
+
   best = result[0]
   val = best.data
   error = abs(val - problem.targetnum)

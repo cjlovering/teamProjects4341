@@ -112,9 +112,7 @@ def solve(problem, params):
   try:
     best = population[0]
   except:
-    print(population)
-    print(starting_population)
-    print(problem.ops)
+    return False  #invalid start
 
   return (best, time.time()-start_time, len(population), generation)
 

@@ -77,6 +77,8 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
+    if result is None:
+      continue
     results.append([result, param[2]])
   save(results, problem, "elitism", index)
   elistism = 1
@@ -89,6 +91,8 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
+    if result is None:
+      continue
     results.append([result, param[3]])
   save(results, problem, "starting_population", index)
   starting_population = 150
@@ -102,6 +106,8 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
+    if result is None:
+      continue
     results.append([result, param[4]])
   save(results, problem, "mutation_chance", index)
   mutation_chance = 0.05
@@ -114,6 +120,8 @@ def test(problem, index):
 
   for param in params:
     result = main(problem, False, param)
+    if result is None:
+      continue
     results.append([result, param[10]])
   save(results, problem, "children_num", index)
   children_num = 1
@@ -126,12 +134,11 @@ def save(results, problem, name, index):
   target = open(filename, 'w')
   for result_pair in results:
     output = result_pair[0]
-    param = result_pair[1]
+    changed_parameter = result_pair[1]
     for param in output:
       target.write(str(param))
       target.write(',')
-
-    target.write(str(param))
+    target.write(str(changed_parameter))
     target.write(',')
     target.write('\n')
   target.close()
