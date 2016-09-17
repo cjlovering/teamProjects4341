@@ -39,12 +39,11 @@ def solve(problem, params):
     op_seq = []
     starting_op_count = random.randint(minOp, maxOp) #see how we do!
     for op in range(starting_op_count):
-      r = random.uniform(0, 1)
-      if r < 0.5:
+      r = random.randint(0, 1)
+      if r == 0:
         #greedy selection
-        selected_val = problem.startnum
         selected_op = problem.ops[0]
-        selected_val = problem.eval_op(selected_val, selected_op)
+        selected_val = problem.eval_op(problem.startnum, selected_op)
         val = selected_val
         for operation in problem.ops:
           val = problem.eval_op(val, operation)
@@ -73,8 +72,8 @@ def solve(problem, params):
     # breeding time
     new_population = []
     for i in range(len(population)):
-      x = random_selection(population);
-      y = random_selection(population);
+      x = random_selection(population)
+      y = random_selection(population)
       child = x.crossover(y)
       if small_random_chance(mutation_chance) and len(child.op_seq) > 1:
         child.mutate(mutation_role_percents, problem)
