@@ -63,7 +63,7 @@ def solve(problem, params):
       y = random_selection(population);
       child = x.crossover(y)
       if small_random_chance(mutation_chance):
-        child.mutate()
+        child.mutate(mutation_role_percents, problem)
       new_population.append(child)
 
     # elitism

@@ -56,5 +56,16 @@ class Organism:
     return Organism(self.op_seq[:r]+other_org.op_seq[r:])
 
   # mutate
-  def mutate(self):
+  def mutate(self, mut_index, problem):
+    r = random.uniform(0, 1)
+    rand_index = random.randint(0, len(self.op_seq) - 1)
+    if (r < mut_index[0]):
+      #delete
+      self.op_seq.pop(rand_index)
+    elif (r < mut_index[0] + mut_index[1]):
+      #add
+      self.op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
+    else:
+      #modify
+      self.op_seq[rand_index] = problem.ops[random.randint(0, len(problem.ops) - 1)]
     return self
