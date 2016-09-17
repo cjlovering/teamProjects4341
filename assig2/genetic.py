@@ -12,7 +12,7 @@ from organism import Organism
 # @param problem - the input defining all problem parameters
 def solve(problem, params):
   try:
-    r = _solve(problem, params)
+    return _solve(problem, params)
   except:
     return None  # there is no solution (only invalids)
 
