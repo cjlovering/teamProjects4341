@@ -25,6 +25,7 @@ def solve(problem, params):
   mutation_role_percents = params[9] # percent to delete, add, or modify
   children_num = params[10] # number of children each pair of parents should create
   
+
   start_time = time.time()
 
   generation = 0
@@ -69,7 +70,8 @@ def solve(problem, params):
     # elitism
     population.sort(key=lambda x: x.cost, reverse=True)
     for i in range(elitism):
-      new_population.append(population[i])
+      if i < len(population) / 2:  # no more than 1/2 the population
+        new_population.append(population[i])
       
     # calculate values and set the costs
     for org in new_population:
@@ -99,7 +101,6 @@ def cull_the_invalids(new_population):
   invalids = []
   for orgIndex in range(len(new_population)):
     if new_population[orgIndex].invalid:
-      print(orgIndex)
       invalids.append(orgIndex)
   invalids.reverse()
   for index in invalids:
@@ -134,6 +135,10 @@ def random_selection(population):
       break
     else:
       last_percent = current_percent
+  if selection is None:
+    print("Selection missed!")
+    print(percentile, last_percent)
+    selection = population[random.randint(0, len(population) - 1)]
   return selection
 
 # @param population - the current set of organisms

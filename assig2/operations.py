@@ -70,6 +70,7 @@ def categorize_problem(ops):
 # executes the calculation
 # @return - the value of the operator applied to the init value and the operand
 def eval_operation(init, stringOperator, operand):
+  print(init, stringOperator, operand)
   if stringOperator == '+':
     return init + operand
   if stringOperator == '-':
