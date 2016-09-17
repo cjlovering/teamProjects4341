@@ -137,6 +137,9 @@ def save(results, problem, name, index):
     target.write('\n')
   target.close()
 
+max_problems = 1
 problems = generate_problems()
 for p in range(len(problems)):
-  test(problems[p], p)
+  if p > max_problems:
+    test(problems[p], p)
+

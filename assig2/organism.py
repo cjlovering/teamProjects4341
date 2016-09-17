@@ -25,17 +25,17 @@ class Organism:
         break
     self.data = val
 
-  # print seq 
+  # print seq
   def print_seq(self, start, problem):
     val = start
 
     for op in range(len(self.op_seq)):
       num = problem.eval_op(val, self.op_seq[op])
-      
-      if op == len(self.op_seq) - 1 :
+
+      if op == len(self.op_seq):
         print(num)
       else:
-        print(val, self.op_seq[op][0], self.op_seq[op][1], '=', num)  
+        print(val, self.op_seq[op][0], self.op_seq[op][1], '=', num)
       val = num
 
   # sets the cost to survive...
@@ -51,10 +51,21 @@ class Organism:
     #calc the new_ops
     new_ops = []
     child = Organism(new_ops)
-    r = random.randint(0, len(self.op_seq))
+    r = random.randint(0, min(len(self.op_seq), len(other_org.op_seq)))
 
     return Organism(self.op_seq[:r]+other_org.op_seq[r:])
 
   # mutate
-  def mutate(self):
+  def mutate(self, mut_index, problem):
+    r = random.uniform(0, 1)
+    rand_index = random.randint(0, len(self.op_seq) - 1)
+    if (r < mut_index[0]):
+      #delete
+      self.op_seq.pop(rand_index)
+    elif (r < mut_index[0] + mut_index[1]):
+      #add
+      self.op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
+    else:
+      #modify
+      self.op_seq[rand_index] = problem.ops[random.randint(0, len(problem.ops) - 1)]
     return self
