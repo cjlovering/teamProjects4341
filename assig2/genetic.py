@@ -40,16 +40,21 @@ def solve(problem, params):
     starting_op_count = random.randint(minOp, maxOp) #see how we do!
     for op in range(starting_op_count):
       r = random.randint(0, 1)
+
       if r == 0:
         #greedy selection
-        selected_op = problem.ops[0]
-        selected_val = problem.eval_op(problem.startnum, selected_op)
-        val = selected_val
-        for operation in problem.ops:
-          val = problem.eval_op(val, operation)
-          if closer(selected_val, val, problem.targetnum):
-            selected_op = operation
-        op_seq.append(selected_op)
+        try:
+          selected_op = op
+          val = problem.eval_op(problem.startnum, selected_op)
+          selected_val = val
+    
+          for operation in problem.ops:
+            val = problem.eval_op(val, operation)
+            if closer(selected_val, val, problem.targetnum):
+              selected_op = operation
+          op_seq.append(selected_op)
+        except:
+          op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
       else:
         #if r > 0.5 random select
         op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
@@ -148,8 +153,6 @@ def random_selection(population):
     else:
       last_percent = current_percent
   if selection is None:
-    print("Selection missed!")
-    print(percentile, last_percent)
     selection = population[random.randint(0, len(population) - 1)]
   return selection
 
