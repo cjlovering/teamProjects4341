@@ -20,10 +20,15 @@ def solve(problem, params):
   mutation_chance = params[4]
   crossover_chance = params[5]
   threshold = params[6]
+  random_start = params[7]
+  greedy_huh = params[8]  # if we add operators greedily to start
+  mutation_role_percents = params[9] # percent to delete, add, or modify
+  children_num = params[10] # number of children each pair of parents should create
   
   start_time = time.time()
 
   generation = 0
+  organism_count = 0 # we're keeping track of this in order to compare additional params (such as over-producing)
 
   target = problem.targetnum
 
@@ -36,13 +41,12 @@ def solve(problem, params):
     for op in range(starting_op_count):
       op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
     population.append(Organism(op_seq))
-
+    
   # data & fitness value calculations
   for org in population:
     org.set_data(problem)
     org.calculate_cost(problem)
   calculate_fitness(population)
-
 
   while True: 
     # bookkeeping
@@ -138,7 +142,7 @@ def random_selection(population):
 # @param target - the number we're aiming for, the correct answer!
 # @return {Boolean} - returns if we're done searching or not
 def cut_off(population, start_time, end_time, target):
-  if time.time()-start_time > end_time - 0.001:
+  if time.time()-start_time > end_time - 0.004:  #at 0.001 we went over once in a while
     return True
   for org in population:
     if goal_test(org.data, target):

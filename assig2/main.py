@@ -3,14 +3,16 @@ import sys
 from parser import parseFile
 from parser import parseCommandLine
 from problem import Problem
-from node import Node
+import operations
+
 import genetic
 
 # general system
 def main(problem, debug, params):
 
   if params is None:
-    params = [1, 30, 1, 150, 0.01, 0.90, 0.00]  #[minOp, maxOp, elitism, starting_population, mutation_chance, crossover_chance, threshold]
+    params = [1, 30, 1, 150, 0.01, 0.90, 0.00, True, False, [0.4,0.4,0.2], 1 ]  
+    # [minOp, maxOp, elitism, starting_population, mutation_chance, crossover_chance, threshold, random_start, greedy_random, mutation_roles, children_num]
   result = genetic.solve(problem, params)
   
   best = result[0]
@@ -22,7 +24,7 @@ def main(problem, debug, params):
   generation = result[3]
 
   if debug == None or debug == True:
-    #operations.print_seq(problem.startnum, best.op_seq)
+    best.print_seq(problem.startnum, problem)
 
     print("Value found: %r" % val)
     print("Error: %r" % error)

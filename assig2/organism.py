@@ -1,5 +1,6 @@
 import random
 from heuristics import heuristic
+from problem import Problem
 
 class Organism:
   # constructor
@@ -23,6 +24,19 @@ class Organism:
         self.invalid = True
         break
     self.data = val
+
+  # print seq 
+  def print_seq(self, start, problem):
+    val = start
+
+    for op in range(len(self.op_seq)):
+      num = problem.eval_op(val, self.op_seq[op])
+      
+      if op == len(self.op_seq) - 1 :
+        print(num)
+      else:
+        print(val, self.op_seq[op][0], self.op_seq[op][1], '=', num)  
+      val = num
 
   # sets the cost to survive...
   def calculate_cost(self, problem):
