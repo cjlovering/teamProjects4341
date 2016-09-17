@@ -48,6 +48,9 @@ def categorize_operation(stringOperator, operand):
   if stringOperator == '!':
     return True #well only if negative, but for now
   print("did not find operator: %r" % stringOperator)
+  print(init, stringOperator, operand)
+  print("hello")
+  print("did not find operator: %r" % stringOperator)
 
 # @return - True if increasing, False if decreasing
 def categorize_problem(ops):
@@ -79,9 +82,12 @@ def eval_operation(init, stringOperator, operand):
   if stringOperator == '*':
     return init * operand
   if stringOperator == '^':
+    
     return math.pow(init, operand)
   if stringOperator == '!':
     return math.factorial(init)
+  print(init, stringOperator, operand)
+  print("hello")
   print("did not find operator: %r" % stringOperator)
 
 # precalculates the sub target operations
