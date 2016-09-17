@@ -39,7 +39,21 @@ def solve(problem, params):
     op_seq = []
     starting_op_count = random.randint(minOp, maxOp) #see how we do!
     for op in range(starting_op_count):
-      op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
+      r = random.uniform(0, 1)
+      if r < 0.5:
+        #greedy selection
+        selected_val = problem.startnum
+        selected_op = problem.ops[0]
+        selected_val = problem.eval_op(selected_val, selected_op)
+        val = selected_val
+        for operation in problem.ops:
+          val = problem.eval_op(val, operation)
+          if closer(selected_val, val, problem.targetnum):
+            selected_op = operation
+        op_seq.append(selected_op)
+      else:
+        #if r > 0.5 random select
+        op_seq.append(problem.ops[random.randint(0, len(problem.ops) - 1)])
     population.append(Organism(op_seq))
 
   # data & fitness value calculations
