@@ -13,6 +13,7 @@ class Organism:
     return
 
   # sets a percentage to survive...
+  # @param {Problem} problem - the problem we are trying to solve
   def set_data(self, problem):
     val = problem.startnum
 
@@ -25,7 +26,9 @@ class Organism:
         break
     self.data = val
 
-  # print seq
+  # print seq in a formatted manner with correct values
+  # @param {Number} start - the starting number
+  # @param {Problem} problem - the problem we are trying to solve
   def print_seq(self, start, problem):
     val = start
 
@@ -47,6 +50,9 @@ class Organism:
   def set_fitness(self, fitness):
     self.fitness = fitness;
 
+  # crosses over with another organism
+  # @param {Organism} other_org - the other parent
+  # @return - the child
   def crossover(self, other_org):
     #calc the new_ops
     new_ops = []
@@ -55,7 +61,9 @@ class Organism:
 
     return Organism(self.op_seq[r:]+other_org.op_seq[:r])
 
-  # mutate
+  # mutates the org
+  # @param {Array} mut_index - the relative probablities of add/del/mod
+  # @param {Problem} problem - the problem we are trying to solve
   def mutate(self, mut_index, problem):
     r = random.uniform(0, 1)
     rand_index = random.randint(0, len(self.op_seq) - 1)

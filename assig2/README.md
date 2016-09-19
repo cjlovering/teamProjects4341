@@ -7,10 +7,11 @@ general:
 ```
 test:
 ```
+  mkdir results
   python3 test_engine.py
 ```
 
-The 'test_engine.py' file will run all the tests in the folder '/tests'.
+The 'test_engine.py' file will run a significant number of generated tests. 
 The files 'test_greedy.py', 'test_iterative.py', 'test_operations.py',
 and 'test_parser.py' are unittests for their corresponding files. Run them
 by executing:
@@ -20,10 +21,13 @@ by executing:
 ```
 
 ### tasks:
-- [ ] float operators & math
-- [ ] diverse start
-	- [ ] random length
-	- [ ] 50/50 random or greedy starting position (?)
-- [ ] consider length of solutions (30 max)
-- [ ] crossover for diff lengths
-- [ ] mutation: modify, delete, add ops
+- [x] float operators & math
+- [x] diverse start
+	- [x] random length
+	- [x] 50/50 random or greedy starting position 
+- [x] consider length of solutions (30 max)
+- [x] crossover for diff lengths
+- [x] mutation: modify, delete, add ops
+- [x] extensive testing
+  - [x] test engine
+- [x] tune parameters

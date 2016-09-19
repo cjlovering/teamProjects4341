@@ -10,8 +10,10 @@ import genetic
 def main(problem, debug, params):
 
   if params is None:
-    params = [1, 30, 1, 150, 0.01, 0.90, 0.00, True, False, [0.4,0.4,0.2], 1 ]
-    # [minOp, maxOp, elitism, starting_population, mutation_chance, crossover_chance, threshold, random_start, greedy_random, mutation_roles, children_num]
+    #params = [1, 30, 4, 100, 0.01, 0.90, 0.00, True, False, [0.33,0.33,0.34], 2 ]
+    params = [1, 30, 4, 150, 0.01, 0.90, 0.00, True, False, [0.33,0.33,0.34], 1 ]
+
+    #[minOp, maxOp, elitism, starting_population, mutation_chance, crossover_chance, threshold, random_start, greedy_random, mutation_roles, children_num]
   result = genetic.solve(problem, params)
 
   if result is None:

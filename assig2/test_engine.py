@@ -38,6 +38,7 @@ random_start_p = 0.5
 greedy_start_p = 0.5
 children_num_vals = [1,2,3,4,5]
 
+# generates all the problems
 def generate_problems():
   problems = []
   for goal in goal_vals:
@@ -52,6 +53,7 @@ def generate_problems():
         problems.append(Problem(alg, start, goal, time, ops))
   return problems
 
+# runs the tests and generates the parameters
 def test(problem, index):
   params = []
   # constants for now
@@ -128,7 +130,7 @@ def test(problem, index):
   params = []
   results = []
 
-# we're gonna focus on the params not the problem
+# saves results to a file
 def save(results, problem, name, index):
   filename = 'results/' + name + str(index) + '.csv'
   target = open(filename, 'w')

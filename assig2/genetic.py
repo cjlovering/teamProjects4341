@@ -9,14 +9,6 @@ from heuristics import heuristic
 from organism import Organism
 
 # genetic algorithm
-# @param problem - the input defining all problem parameters
-def solve(problem, params):
-  try:
-    return _solve(problem, params)
-  except:
-    return None  # there is no solution (only invalids)
-
-# genetic algorithm
 def _solve(problem, params):
   global generation
 
@@ -121,6 +113,8 @@ def _solve(problem, params):
 
   return (best, time.time()-start_time, len(population), generation)
 
+# culls all invalids
+# @param {Array} new_population - the population to be culled
 def cull_the_invalids(new_population):
   invalids = []
   for orgIndex in range(len(new_population)):
@@ -130,12 +124,16 @@ def cull_the_invalids(new_population):
   for index in invalids:
     del new_population[index]
 
+# culls the weak (lowest cost)
+# @param {Array} new_population - the population to be culled
+# @param {Number} starting_population_count - the max size of the population
 def cull_the_weak(new_population, starting_population_count):
   to_cull = len(new_population) - starting_population_count
   if to_cull > 0:
     new_population.sort(key=lambda x: x.cost, reverse=True)
     del new_population[(len(new_population) - to_cull):]
 
+# calculates the fitness of everything in the population
 # @param population - the current set of organisms
 def calculate_fitness(population):
   sum_costs = 0
@@ -180,3 +178,11 @@ def cut_off(population, start_time, end_time, target):
 # @return {Boolean} - if a small random chance occured!
 def small_random_chance(mutation_chance):
   return random.uniform(0.0, 1.) < mutation_chance
+
+# genetic algorithm
+# @param problem - the input defining all problem parameters
+def solve(problem, params):
+  try:
+    return _solve(problem, params)
+  except:
+    return None  # there is no solution (only invalids)
